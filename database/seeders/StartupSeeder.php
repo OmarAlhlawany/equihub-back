@@ -7,6 +7,6 @@ use App\Models\Startup;
 
 class StartupSeeder extends Seeder {
     public function run(): void {
-        Startup::factory(5947)->create();
+        Startup::factory(4578)->create();
     }
 }
