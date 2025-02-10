@@ -9,4 +9,10 @@ class FundingAmount extends Model {
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function startups()
+    {
+        return $this->hasMany(Startup::class, 'funding_amount_id');
+    }
+
 }

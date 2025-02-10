@@ -92,6 +92,13 @@
                             <button class="btn btn-danger btn-sm" style="padding: 5px 10px; font-size: 14px; background-color:transparent; color: #000000; border: 0px" onclick="confirmDelete({{ $startup->id }})">
                                 <i class="fas fa-trash-alt" style="color: #2B37A0; font-size: 25px; transition: color 0.3s;" onmouseover="this.style.color='red';" onmouseout="this.style.color='#2B37A0';"></i>
                             </button>
+                            <form action="{{ route('startup.api.test', $startup->id) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-primary"
+                                    style="padding: 5px 20px; font-size: 16px;  margin-top: 10px; border-radius: 50px; background-color: white; color: #2B37A0; border: 1px solid #2B37A0;">
+                                    Send to AI
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach

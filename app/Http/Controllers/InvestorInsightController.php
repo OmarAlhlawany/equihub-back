@@ -8,17 +8,15 @@ use App\Models\InvestmentType;
 use App\Models\BudgetRange;
 use App\Models\GeographicalScope;
 use App\Models\OperationalPhase;
-use App\Models\CompanySector;
 use App\Models\FavouriteSector;
 use Illuminate\Http\Request;
 
-class InsightController extends Controller
+class InvestorInsightController extends Controller
 {
     public function index()
     {
         // Total Counts
         $investorCount = Investor::count();
-        $startupCount = Startup::count();
 
         // Investors by Investment Type
         $investmentCounts = InvestmentType::withCount('investors')->pluck('investors_count', 'name')->toArray();
@@ -42,8 +40,7 @@ class InsightController extends Controller
         // Investors by Geographical Scope
         $geographicalCounts = GeographicalScope::withCount('investors')->pluck('investors_count', 'name')->toArray();
 
-        // Startups by Operational Phase
-        $startupPhaseCounts = OperationalPhase::withCount('startups')->pluck('startups_count', 'name')->toArray();
+        
 
         // Investors by Favourite Sectors
         $sectorCounts = FavouriteSector::withCount('investors')->pluck('investors_count', 'name')->toArray();
@@ -57,14 +54,12 @@ class InsightController extends Controller
         $sector2 = array_slice($sectorKeys, $half);
         $count2 = array_slice($sectorValues, $half);
 
-        return view('insights.index', compact(
+        return view('insights_investor.index', compact(
             'investorCount',
-            'startupCount',
             'investmentCounts',
             'budgetCounts',
             'sortedBudgetCounts',
             'geographicalCounts',
-            'startupPhaseCounts',
             'sector1',
             'count1',
             'sector2',

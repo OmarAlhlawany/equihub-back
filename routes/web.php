@@ -6,8 +6,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InvestorController;
 use App\Http\Controllers\StartupController;
-use App\Http\Controllers\InsightController;
 use App\Http\Controllers\DynamicTableController;
+use App\Http\Controllers\InvestorInsightController;
+use App\Http\Controllers\StartupInsightController;
+use App\Http\Controllers\InvestorApiTestController;
+use App\Http\Controllers\StartupApiTestController;
 
 
 // Redirect root to login page
@@ -44,8 +47,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/startups/{startup}', [StartupController::class, 'show'])->name('startups.show');
     Route::delete('/startups/{startup}', [StartupController::class, 'destroy'])->name('startups.destroy');
 
-    // Insights Route
-    Route::get('/insights', [InsightController::class, 'index'])->name('insights');
+    // Investor Insights Route
+    Route::get('/investor-insights', [InvestorInsightController::class, 'index'])->name('investor-insights');
+
+    // Startup Insights Route
+    Route::get('/startup-insights', [StartupInsightController::class, 'index'])->name('startup-insights');
+
 
     // Users Routes
     Route::get('/users', [UserController::class, 'index'])->name('users');
@@ -59,5 +66,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dynamic-tables', [DynamicTableController::class, 'index'])->name('dynamic-tables.index');
     Route::post('/dynamic-tables/store', [DynamicTableController::class, 'store'])->name('dynamic-tables.store');
     Route::delete('/dynamic-tables/{table}/{id}', [DynamicTableController::class, 'destroy'])->name('dynamic-tables.destroy');
+
+
+    Route::get('/investors/{id}/test-api', [InvestorApiTestController::class, 'showTestPage'])->name('investor.api.test');
+    Route::post('/investors/{id}/send-to-ai', [InvestorApiTestController::class,'sendInvestorData'])->name('investor.api.test.send');
+
+    Route::get('/startups/{id}/test-api', [StartupApiTestController::class, 'showTestPage'])->name('startup.api.test');
+    Route::post('/startups/{id}/send-to-ai', [StartupApiTestController::class, 'sendStartupData'])->name('startup.api.test.send');
 
 });

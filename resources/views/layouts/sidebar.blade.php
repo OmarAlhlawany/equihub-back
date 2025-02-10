@@ -31,9 +31,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('insights') }}" class="nav-link {{ request()->is('insights') ? 'active' : '' }}">
+                    <a href="{{ route('investor-insights') }}" class="nav-link {{ request()->is('insights') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-chart-line"></i>
-                        <p>Insights</p>
+                        <p>Investor Insights</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('startup-insights') }}" class="nav-link {{ request()->is('insights') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-chart-line"></i>
+                        <p>Startup Insights</p>
                     </a>
                 </li>
                 <li class="nav-item">

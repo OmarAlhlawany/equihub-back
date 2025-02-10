@@ -83,6 +83,14 @@
                             <i class="fas fa-trash-alt" style="color: #2B37A0; font-size: 25px;"
                                 onmouseover="this.style.color='red';" onmouseout="this.style.color='#2B37A0';"></i>
                         </button>
+                        <form action="{{ route('investor.api.test', $investor->id) }}">
+                            @csrf
+                            <button type="submit" class="btn btn-primary"
+                                style="padding: 5px 20px; font-size: 16px;  margin-top: 10px; border-radius: 50px; background-color: white; color: #2B37A0; border: 1px solid #2B37A0;">
+                                Send to AI
+                            </button>
+                        </form>
+                    
                     </td>
                 </tr>
                 @endforeach

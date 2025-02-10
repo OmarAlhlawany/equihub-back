@@ -9,4 +9,8 @@ class TargetMarket extends Model {
     use HasFactory;
 
     protected $fillable = ['name'];
+    public function startups()
+    {
+        return $this->hasMany(Startup::class, 'target_market_id');
+    }
 }

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('page-title', 'Insights')
+@section('page-title', 'Investor Insights')
 
 @section('content')
 <div class="container">
@@ -8,7 +8,7 @@
         <div class="col-md-6">
             <!-- Top Row: Investors & Startups Count -->
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="card p-3 text-center custom-bottom-shadow rounded-4" style="border-radius: 25px;">
                         <div class="row w-100">
                             <!-- Left: Icon -->
@@ -16,28 +16,14 @@
                                 <img src="{{ asset('images/investor-logo.svg') }}" alt="Investor Logo" class="img-fluid" style="max-width: 50px;">
                             </div>
                             <!-- Right: Text & Count -->
-                            <div class="col-7 text-left">
+                            <div class="col-7 ">
                                 <h4 style="color: #333; font-size: 18px;">Total Investors</h4>
                                 <h2 style="color: #2B37A0; font-size: 30px; font-weight: bold;">{{ $investorCount }}</h2>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card p-3 text-center custom-bottom-shadow rounded-4" style="border-radius: 25px;">
-                        <div class="row w-100">
-                            <!-- Left: Icon -->
-                            <div class="col-5 d-flex align-items-center justify-content-center">
-                                <img src="{{ asset('images/startup-logo.svg') }}" alt="Startup Logo" class="img-fluid" style="max-width: 50px;">
-                            </div>
-                            <!-- Right: Text & Count -->
-                            <div class="col-7 text-left">
-                                <h4 style="color: #333; font-size: 18px;">Total Startups</h4>
-                                <h2 style="color: #2B37A0; font-size: 30px; font-weight: bold;">{{ $startupCount }}</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
             
     
@@ -72,21 +58,7 @@
     
     
 
-        <!-- Startups by Operational Phase (Box) -->
-
-    <div class="card p-3 mt-3 custom-bottom-shadow rounded-4" style="border-radius: 25px;">
-        <h5 class="text-center" style="font-size: 20px; color: #444;">Startups by Operational Phase</h5>
-        <div class="row justify-content-between">
-            @foreach (['Pre-Seed', 'Seed', 'Pre-Series A', 'Series A', 'Series B'] as $phase)
-            <div class="col-md-2">
-                <div class="card p-3 text-center custom-bottom-shadow rounded-3" style="border-radius: 25px;">
-                    <h5 style="font-size: 16px; color: #555;">{{ $phase }}</h5>
-                    <h3 style="color: #2B37A0; font-size: 25px; font-weight: bold;">{{ $startupPhaseCounts[$phase] ?? 0 }}</h3>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
+        
             
         <!-- Investors by Geographical Scope -->
     <div class="card p-3 mt-3 custom-bottom-shadow rounded-4" style="border-radius: 25px;">

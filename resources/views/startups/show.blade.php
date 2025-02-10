@@ -27,13 +27,13 @@
                 <strong>Revenue Growth:</strong> {{ $startup->revenue_growth }}% <br>
                 <strong>Revenue Goal:</strong> {{ number_format($startup->revenue_goal, 2) }} <br>
                 <strong>Have Debts:</strong> {{ $startup->haveDebts->name ?? 'N/A' }} <br>
-                @if(optional($startup->haveDebts)->name == 'Yes')
+                @if(optional($startup->haveDebts)->name == 'yes')
                     <strong>Debt Amount:</strong> {{ number_format($startup->debt_amount, 2) }} <br>
                 @endif
                 <strong>Break-even Point:</strong> {{ $startup->break_even_point }} <br>
                 <strong>Financial Goal:</strong> {{ $startup->financial_goal }} <br>
                 <strong>Has Exit Strategy:</strong> {{ $startup->hasExitStrategy->name ?? 'N/A' }} <br>
-                @if(optional($startup->hasExitStrategy)->name == 'Yes')
+                @if(optional($startup->hasExitStrategy)->name == 'yes')
                     <strong>Exit Strategy Details:</strong> {{ $startup->exit_strategy_details }} <br>
                 @endif
             </p>

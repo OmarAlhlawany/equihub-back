@@ -10,6 +10,10 @@ class CompanySector extends Model {
 
     protected $fillable = ['name'];
 
+    public function startups()
+    {
+        return $this->hasMany(Startup::class, 'company_sector_id');
+    }
 
 
 }
