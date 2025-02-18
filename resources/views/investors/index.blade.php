@@ -7,9 +7,12 @@
     <!-- Search Form -->
     <div class="d-flex justify-content-center mb-4">
         <form action="{{ route('investors') }}" method="GET" class="d-flex" style="gap: 10px;">
+            <!-- Dropdown Filter -->
             <select name="search_field" id="searchField" class="form-control"
-                style="width: 180px; padding: 5px 10px; font-size: 16px; border-radius: 50px; background-color: white; color: #2B37A0; border: 1px solid #2B37A0;"
-                onchange="toggleSearchInput()">
+                style="width: 180px; padding: 5px 10px; font-size: 16px; border-radius: 50px; background-color: white; color: #2B37A0; border: 1px solid #2B37A0; transition: background-color 0.3s, color 0.3s;"
+            onmouseover="this.style.backgroundColor='#2B37A0'; this.style.color='white';"
+            onmouseout="this.style.backgroundColor='white'; this.style.color='#2B37A0';"
+            onchange="toggleSearchInput()">
                 <option value="" selected>Search With</option>
                 <option value="name" {{ request('search_field') == 'name' ? 'selected' : '' }}>Name</option>
                 <option value="email" {{ request('search_field') == 'email' ? 'selected' : '' }}>Email</option>
@@ -22,12 +25,16 @@
                 style="width: 250px; border-radius: 50px; border: 1px solid #2B37A0; color: #2B37A0;">
 
             <button type="submit" id="searchBtn" class="btn btn-primary" disabled
-                style="padding: 5px 10px; font-size: 14px; border-radius: 50px; background-color: white; color: #2B37A0; border: 1px solid #2B37A0;">
+                style="padding: 5px 10px; font-size: 14px; border-radius: 50px; background-color: white; color: #2B37A0; border: 1px solid #2B37A0;transition: background-color 0.3s, color 0.3s; cursor: not-allowed;"
+            onmouseover="this.style.backgroundColor='#2B37A0'; this.style.color='white';"
+            onmouseout="this.style.backgroundColor='white'; this.style.color='#2B37A0';">
                 Search
             </button>
 
             <button type="button" class="btn btn-secondary" onclick="resetSearch()"
-                style="padding: 5px 10px; font-size: 14px; border-radius: 50px; background-color: white; color: #2B37A0; border: 1px solid #2B37A0;">
+                style="padding: 5px 10px; font-size: 14px; border-radius: 50px; background-color: white; color: #2B37A0; border: 1px solid #2B37A0;transition: background-color 0.3s, color 0.3s;"
+            onmouseover="this.style.backgroundColor='#2B37A0'; this.style.color='white';"
+            onmouseout="this.style.backgroundColor='white'; this.style.color='#2B37A0';">
                 Reset
             </button>
         </form>
@@ -54,7 +61,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span>Actions</span>
                             <a href="{{ route('investors.create') }}" class="btn btn-primary"
-                                style="padding: 5px 10px; font-size: 14px; border-radius: 50px; background-color: white; color: #2B37A0; border: 1px solid #2B37A0;">
+                                style="padding: 5px 10px; font-size: 14px; border-radius: 50px; background-color: white; color: #2B37A0; border: 1px solid #2B37A0;transition: background-color 0.3s, color 0.3s;" onmouseover="this.style.backgroundColor='#2B37A0'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#2B37A0';">
                                 Add Investor
                             </a>
                         </div>
@@ -71,11 +78,11 @@
                     <td style="text-align: center">{{ $investor->company }}</td>
                     <td style="text-align: center">
                         <a href="{{ route('investors.show', $investor->id) }}" class="btn btn-info btn-sm"
-                            style="padding: 5px 10px; font-size: 14px; border-radius: 50px; background-color: white; color: #2B37A0; border: 1px solid #2B37A0;">
+                            style="padding: 5px 10px; font-size: 14px; border-radius: 50px; background-color: white; color: #2B37A0; border: 1px solid #2B37A0;transition: background-color 0.3s, color 0.3s;" onmouseover="this.style.backgroundColor='#2B37A0'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#2B37A0';">
                             View
                         </a>
                         <a href="{{ route('investors.edit', $investor->id) }}" class="btn btn-warning btn-sm"
-                            style="padding: 5px 10px; font-size: 14px; border-radius: 50px; background-color: white; color: #000000; border: 1px solid #000000;">
+                            style="padding: 5px 10px; font-size: 14px; border-radius: 50px; background-color: white; color: #000000; border: 1px solid #000000;transition: background-color 0.3s, color 0.3s;" onmouseover="this.style.backgroundColor='#2B37A0'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#000000';">
                             Edit
                         </a>
                         <button class="btn btn-danger btn-sm" onclick="confirmDelete({{ $investor->id }})"

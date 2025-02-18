@@ -29,6 +29,7 @@ class InvestorApiTestController extends Controller
 
         // Prepare JSON data to display on the Blade file
         $data = [
+            'type' =>'investor',
             'id' => $investor->id,
             'name' => $investor->name,
             'email' => $investor->email,
@@ -68,6 +69,7 @@ class InvestorApiTestController extends Controller
 
         // Construct API payload
         $data = [
+            'type' => 'investor',
             'id' => $investor->id,
             'name' => $investor->name,
             'email' => $investor->email,
@@ -91,6 +93,9 @@ class InvestorApiTestController extends Controller
         ];
 
         try {
+
+            // Log the request payload
+            Log::channel('custom_investor')->info('Sending startup data to AI:', ['data' => $data]);
             // Send data to AI model
             $response = $client->post($url, [
                 'json' => $data,
@@ -101,14 +106,14 @@ class InvestorApiTestController extends Controller
             $body = json_decode($response->getBody(), true);
 
             // Log response for debugging
-            Log::info('AI Response:', ['response' => $body]);
+            Log::channel('custom_investor')->info('AI Response:', ['response' => $body]);
 
             return back()->with('success', 'Investor data sent successfully!');
         } catch (\GuzzleHttp\Exception\RequestException $e) {
-            Log::error('GuzzleHttp RequestException:', ['message' => $e->getMessage()]);
+            Log:: channel ('custom_investor')->error('GuzzleHttp RequestException:', ['message' => $e->getMessage()]);
             return back()->with('error', 'API request failed: ' . $e->getMessage());
         } catch (\Exception $e) {
-            Log::error('General Exception:', ['message' => $e->getMessage()]);
+            Log::channel ('custom_investor')->error('General Exception:', ['message' => $e->getMessage()]);
             return back()->with('error', 'An unexpected error occurred: ' . $e->getMessage());
         }
     }

@@ -47,11 +47,10 @@
         <table class="table" style="background-color: white; border-radius: 25px;">
             <thead>
                 <tr>
-                    <th style="color: #2B37A0; text-align: center;">Table Name</th>
-                    <th style="color: #2B37A0; text-align: center;">Actions</th>
-                </tr>
+                    <th style="color: #2B37A0; text-align: center; padding: 25px;"></th>
+                </tr >
             </thead>
-            <tbody>
+            <tbody style="border-radius: 25px;">
                 @foreach([
                     'company_sectors' => $company_sectors, 
                     'operational_phases' => $operational_phases, 
@@ -65,8 +64,8 @@
                     'geographical_scopes' => $geographical_scopes,
                     'investment_privacy_options' => $investment_privacy_options,
                 ] as $table_name => $items)
-                    <tr>
-                        <td style="text-align: center; font-weight: bold;">                            <button class="btn btn-link toggle-collapse" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $table_name }}">
+                    <tr >
+                        <td style="text-align: center; font-weight: bold; border-radius: 25px;">     <button class="btn btn-link toggle-collapse" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $table_name }}">
                             {{ ucfirst(str_replace('_', ' ', $table_name)) }}
                             <i class="fas fa-chevron-down"></i>
                         </button>
@@ -78,7 +77,7 @@
                                 <table class="table table-borderless">
                                     <tbody>
                                         @foreach($items as $item)
-                                        <tr id="row-{{ $item->id }}" style="border-bottom: 1px solid #ddd;">
+                                        <tr id="row-{{ $item->id }}" style="border-bottom: 1px solid #ddd; border-radius: 25px;">
                                             <td style="text-align: left; padding-left: 20px;">{{ $item->name }}</td>
                                             <td style="text-align: right; padding-right: 20px;">
                                                 <button type="button" class="btn btn-danger btn-sm delete-entry"

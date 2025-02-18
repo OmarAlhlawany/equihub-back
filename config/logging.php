@@ -127,6 +127,19 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        'custom_investor' => [
+        'driver' => 'single',
+        'path' => storage_path('logs/investor_api.log'),
+        'level' => 'info',
+        ],
+
+    'custom_startup' => [
+        'driver' => 'single',
+        'path' => storage_path('logs/startup_api.log'),
+        'level' => 'info',
+        ],
+
+
     ],
 
 ];

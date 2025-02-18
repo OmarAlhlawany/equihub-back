@@ -78,6 +78,13 @@
     </div>
 </div>
 
+<script>
+    var jsonData = {!! json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) !!};
+
+    console.log("JSON Sent to AI:\n" + JSON.stringify(jsonData, null, 2));
+</script>
+
+
 <!-- Styles -->
 <style>
     .table-container {

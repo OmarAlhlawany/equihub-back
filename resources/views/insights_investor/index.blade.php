@@ -27,24 +27,30 @@
             </div>
             
     
-            <!-- Investors by Investment Type (Angel & Funding) -->
-            <div class="card p-3 mt-3 custom-bottom-shadow rounded-4" style="border-radius: 25px;">
-                <h5 class="text-center" style="font-size: 20px; color: #444;">Investors by Investment Type</h5>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card p-3 text-center custom-bottom-shadow rounded-3" style="border-radius: 25px;">
-                            <h5 style="font-size: 16px; color: #555;">Angel Investors</h5>
-                            <h3 style="color: #2B37A0; font-size: 25px; font-weight: bold;">{{ $investmentCounts['Angel Investment'] ?? 0 }}</h3>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card p-3 text-center custom-bottom-shadow rounded-3" style="border-radius: 25px;">
-                            <h5 style="font-size: 16px; color: #555;">Funding Investors</h5>
-                            <h3 style="color: #2B37A0; font-size: 25px; font-weight: bold;">{{ $investmentCounts['Investment Funding'] ?? 0 }}</h3>
-                        </div>
-                    </div>
+            <!-- Investors by Investment Type -->
+<div class="card p-3 mt-3 custom-bottom-shadow rounded-4" style="border-radius: 25px;">
+    <h5 class="text-center" style="font-size: 20px; color: #444;">Investors by Investment Type</h5>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card p-3 text-center custom-bottom-shadow rounded-3" style="border-radius: 25px;">
+                <h5 style="font-size: 16px; color: #555;">Angel Investors</h5>
+                <div class="d-flex align-items-center justify-content-center mt-2">
+                    <img src="{{ asset('images/angel-logo.svg') }}" alt="Angel Logo" width="40" height="40" class="me-3">
+                    <h3 style="color: #2B37A0; font-size: 25px; font-weight: bold; padding-left: 10px">{{ $investmentCounts['Angel Investment'] ?? 0 }}</h3>
                 </div>
             </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card p-3 text-center custom-bottom-shadow rounded-3" style="border-radius: 25px;">
+                <h5 style="font-size: 16px; color: #555;">Funding Investors</h5>
+                <div class="row align-items-center justify-content-center mt-2 ">
+                    <img src="{{ asset('images/funding-logo.svg') }}" alt="Funding Logo" width="40" height="40" class="me-3">
+                    <h3 style="color: #2B37A0; font-size: 25px; font-weight: bold; padding-left: 10px">{{ $investmentCounts['Investment Funding'] ?? 0 }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
         </div>
     
         <!-- Left Column: Circle Chart (Now on the Right) -->

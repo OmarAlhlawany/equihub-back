@@ -32,6 +32,7 @@ class StartupApiTestController extends Controller
 
         // Construct API payload with all attributes
         $data = [
+            'type'                    => 'startup',
             'id'                      => $startup->id,
             'name'                    => $startup->name,
             'email'                   => $startup->email,
@@ -87,6 +88,7 @@ class StartupApiTestController extends Controller
 
         // Construct API payload with all attributes
         $data = [
+            'type'                    => 'startup',
             'id'                      => $startup->id,
             'name'                    => $startup->name,
             'email'                   => $startup->email,
@@ -126,7 +128,7 @@ class StartupApiTestController extends Controller
 
         try {
             // Log the request payload
-            Log::info('Sending startup data to AI:', ['data' => $data]);
+            Log::channel('custom_startup')->info('Sending startup data to AI:', ['data' => $data]);
 
             // Send data to AI model
             $response = $client->post($apiUrl, [
@@ -138,14 +140,14 @@ class StartupApiTestController extends Controller
             $body = json_decode($response->getBody(), true);
 
             // Log response for debugging
-            Log::info('AI Response:', ['response' => $body]);
+            Log::channel('custom_startup')->info('AI Response:', ['response' => $body]);
 
             return back()->with('success', 'Startup data sent successfully!');
         } catch (\GuzzleHttp\Exception\RequestException $e) {
-            Log::error('GuzzleHttp RequestException:', ['message' => $e->getMessage()]);
+            Log::channel('custom_startup')->error('GuzzleHttp RequestException:', ['message' => $e->getMessage()]);
             return back()->with('error', 'API request failed: ' . $e->getMessage());
         } catch (\Exception $e) {
-            Log::error('General Exception:', ['message' => $e->getMessage()]);
+            Log::channel('custom_startup')->error('General Exception:', ['message' => $e->getMessage()]);
             return back()->with('error', 'An unexpected error occurred: ' . $e->getMessage());
         }
     }

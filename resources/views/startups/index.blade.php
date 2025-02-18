@@ -61,7 +61,7 @@
                     <th style="color: #2B37A0; text-align: center;">Phone</th>
                     <th style="color: #2B37A0; text-align: center;">Company</th>
                     <th style="color: #2B37A0; text-align: center;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; ">
                             <span>Actions</span>
                             <a href="{{ route('startups.create') }}" class="btn btn-primary" 
                             style="padding: 5px 10px; font-size: 14px; border-radius: 50px; background-color: white; color: #2B37A0; border: 1px solid #2B37A0; transition: background-color 0.3s, color 0.3s;" onmouseover="this.style.backgroundColor='#2B37A0'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#2B37A0';">
@@ -74,12 +74,12 @@
             <tbody>
                 @foreach($startups as $startup)
                     <tr>
-                        <td style="text-align: center">{{ $startup->id }}</td>
-                        <td style="text-align: center">{{ $startup->name }}</td>
-                        <td style="text-align: center">{{ $startup->email }}</td>
-                        <td style="text-align: center">{{ $startup->phone_number }}</td>
-                        <td style="text-align: center">{{ $startup->company }}</td>
-                        <td style="text-align: center">
+                        <td style="color: #2B37A0; text-align: center">{{ $startup->id }}</td>
+                        <td style="color: #2B37A0; text-align: center">{{ $startup->name }}</td>
+                        <td style="color: #2B37A0; text-align: center">{{ $startup->email }}</td>
+                        <td style="color: #2B37A0; text-align: center">{{ $startup->phone_number }}</td>
+                        <td style="color: #2B37A0; text-align: center">{{ $startup->company }}</td>
+                        <td style="color: #2B37A0; text-align: center">
                             <!-- View button -->
                             <a href="{{ route('startups.show', $startup->id) }}" class="btn btn-info btn-sm" style="padding: 5px 10px; font-size: 14px; border-radius: 50px; background-color: white; color: #2B37A0; border: 1px solid #2B37A0; transition: background-color 0.3s, color 0.3s;" onmouseover="this.style.backgroundColor='#2B37A0'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#2B37A0';">
                                 View
