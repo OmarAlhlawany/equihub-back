@@ -86,7 +86,7 @@ class InvestorApiTestController extends Controller
         ];
 
         $client = new Client();
-        $url = 'cyme058z1wg0000y7jyggxk8ynayyyyyb.oast.pro'; // Replace with actual AI endpoint
+        $url = 'cyme058z1wg0000y7jyggxqcrpwyyyyyf.oast.pro'; // Replace with actual AI endpoint
         $headers = [
             'Accept' => 'application/json',
             'Authorization' => 'Bearer YOUR_API_KEY' // Add actual API key if required
