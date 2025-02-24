@@ -4,16 +4,20 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\{CompanySector, OperationalPhase, FundingAmount, FundingSource, TargetMarket, YesNoOption};
+use Faker\Factory as FakerFactory;
 
 class StartupFactory extends Factory {
     public function definition(): array {
+        $language = rand(0, 1) ? 'en_US' : 'ar_SA';
+        $faker = FakerFactory::create($language);
+
         return [
-            'name' => $this->faker->company,
+            'name' =>$faker->company,
             'email' => $this->faker->unique()->safeEmail,
             'phone_number' => $this->faker->numerify('+971#########'), // UAE phone format
-            'company' => $this->faker->company,
+            'company' => $faker->company,
             'website' => $this->faker->url,
-            'product_service_description' => $this->faker->sentence(10),
+            'product_service_description' =>implode(' ', $faker->words(10)),
 
             // Dynamic foreign key values
             'company_sector_id' => CompanySector::inRandomOrder()->first()->id ?? CompanySector::factory(),
@@ -36,11 +40,11 @@ class StartupFactory extends Factory {
             'debt_amount' => $this->faker->optional()->randomFloat(2, 1000, 1000000),
 
             // Other fields
-            'problem_solved' => $this->faker->sentence(20),
-            'funding_used' => $this->faker->sentence(20),
-            'break_even_point' => $this->faker->sentence(5),
-            'financial_goal' => $this->faker->sentence(20),
-            'exit_strategy_details' => $this->faker->optional()->sentence(20),
+            'problem_solved' => implode(' ', $faker->words(10)),
+            'funding_used' => implode(' ', $faker->words(10)),
+            'break_even_point' => implode(' ', $faker->words(10)),
+            'financial_goal' => implode(' ', $faker->words(10)),
+            'exit_strategy_details' => $faker->optional()->sentence(nbWords: 20),
         ];
     }
 }

@@ -1,109 +1,82 @@
 @extends('layouts.app')
-@section('page-title', 'Investor API Test')
 
 @section('content')
 <div class="container">
+    <h1 class="mb-4 text-center">Investor Overview</h1>
 
-    <!-- Success & Error Messages -->
-    @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-    @endif
-
-    @if(session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-    @endif
-
-    <h3 class="text-center" style="color: #2B37A0;">Investor API Test</h3>
-
-    <!-- Flexbox to Arrange Table and JSON Side-by-Side -->
-    <div class="d-flex flex-wrap justify-content-between">
-        <!-- Investor Details Table -->
-        <div class="table-container" style="overflow-x: auto; border-radius: 25px;">
-            <table class="table" style="background-color: white; border-radius: 25px;">
-                    <thead>
-                    <tr>
-                        <th>Field</th>
-                        <th>Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>ID</strong></td><td>{{ $investor->id }}</td></tr>
-                    <tr><td><strong>Name</strong></td><td>{{ $investor->name }}</td></tr>
-                    <tr><td><strong>Email</strong></td><td>{{ $investor->email }}</td></tr>
-                    <tr><td><strong>Phone</strong></td><td>{{ $investor->phone_number }}</td></tr>
-                    <tr><td><strong>Company</strong></td><td>{{ $investor->company }}</td></tr>
-                    <tr><td><strong>Investment Type</strong></td><td>{{ optional($investor->investmentType)->name }}</td></tr>
-                    <tr><td><strong>Favourite Investment Stage</strong></td><td>{{ optional($investor->favouriteInvestmentStage)->name }}</td></tr>
-                    <tr><td><strong>Budget Range</strong></td><td>{{ optional($investor->budgetRange)->name ?? 'N/A' }}</td></tr>
-                    <tr><td><strong>Geographical Scope</strong></td><td>{{ optional($investor->geographicalScope)->name }}</td></tr>
-                    <tr><td><strong>Co-Invest</strong></td><td>{{ optional($investor->coInvest)->name ?? 'N/A' }}</td></tr>
-                    <tr><td><strong>Investment Privacy Option</strong></td><td>{{ optional($investor->investmentPrivacyOption)->name ?? 'N/A' }}</td></tr>
-                    <tr><td><strong>Favourite Sectors</strong></td><td>{{ implode(', ', $investor->favouriteSectors->pluck('name')->toArray()) }}</td></tr>
-                    <tr><td><strong>Additional Notes</strong></td><td>{{ $investor->additional_notes }}</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- JSON Box -->
-        <div class="json-container">
-            <h5 style="color: #2B37A0;">JSON Data for AI</h5>
-            <pre>{{ json_encode($data, JSON_PRETTY_PRINT) }}</pre>
+    <!-- Investor Details Card -->
+    <div class="card mb-4 shadow-lg">
+        <div class="card-body">
+            <h5 class="card-title">Investor Information</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Name:</strong> Dr. Woodrow Greenfelder Sr.</li>
+                <li class="list-group-item"><strong>Email:</strong> fahey.kristoffer@example.org</li>
+                <li class="list-group-item"><strong>Phone:</strong> +971832371426</li>
+                <li class="list-group-item"><strong>Company:</strong> Bernhard-Schimmel</li>
+                <li class="list-group-item"><strong>Investment Type:</strong> Angel Investment</li>
+                <li class="list-group-item"><strong>Favourite Investment Stage:</strong> Pre-Seed</li>
+                <li class="list-group-item"><strong>Budget Range:</strong> $100K to $500K</li>
+                <li class="list-group-item"><strong>Geographical Scope:</strong> Regional</li>
+                <li class="list-group-item"><strong>Co-Invest:</strong> Yes</li>
+                <li class="list-group-item"><strong>Investment Privacy Option:</strong> Keep my investments private</li>
+                <li class="list-group-item"><strong>Favourite Sectors:</strong> General Trade, Gaming, Healthcare & HealthTech, Social Innovation, Sports & Entertainment</li>
+            </ul>
         </div>
     </div>
 
-    <!-- Buttons -->
-    <div class="d-flex justify-content-between mt-4">
-        <form action="{{ route('investor.api.test.send', $investor->id) }}" method="POST">
-            @csrf
-            <button type="submit" class="btn btn-primary">Send to AI</button>
-        </form>
-        <a href="{{ route('investors') }}" class="btn btn-secondary">Back to List</a>
-    </div>
+    
+
+    <!-- AI Response Card -->
+    @if(session('api_response'))
+        <div class="card mb-4 shadow-lg">
+            <div class="card-body">
+                <h5 class="card-title">AI Generated Response</h5>
+                <pre class="json-container">{{ print_r(session('api_response'), true) }}</pre>
+            </div>
+        </div>
+    @endif
+
+    <!-- Send Data Button -->
+    <form action="{{ route('investor.api.test.send', $investor->id) }}" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-primary">Send Data to AI</button>
+    </form>
 </div>
-
-<script>
-    var jsonData = {!! json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) !!};
-
-    console.log("JSON Sent to AI:\n" + JSON.stringify(jsonData, null, 2));
-</script>
-
+@endsection
 
 <!-- Styles -->
 <style>
-    .table-container {
-        flex: 1;
-        overflow-x: auto;
-    }
-
     .json-container {
-        flex: 1;
         background-color: #f8f9fa;
         border: 1px solid #ddd;
         padding: 15px;
         border-radius: 10px;
-        overflow: auto;
-        max-height: 650px;
-        font-size: 18px;
+        font-size: 16px;
         color: #2B37A0;
         white-space: pre-wrap;
         word-wrap: break-word;
     }
-
-    .table th, .table td {
-        text-align: left;
-        color: #2B37A0;
-        padding: 8px;
+    .card {
+        border-radius: 15px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
     }
-
     .btn {
         padding: 10px 20px;
         font-size: 16px;
         border-radius: 50px;
-        transition: 0.3s;
+        background-color: #6c63ff;
+        border: none;
+        color: white;
+        transition: all 0.3s ease-in-out;
+    }
+    .btn:hover {
+        background-color: #4e47d1;
+    }
+    .list-group-item {
+        font-size: 16px;
+        color: #333;
+    }
+    .list-group-item strong {
+        color: #5a5a5a;
     }
 </style>
-@endsection
