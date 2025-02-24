@@ -5,42 +5,54 @@
     <h1 class="mb-4 text-center">Investor Overview</h1>
 
     <!-- Investor Details Card -->
-    <div class="card mb-4 shadow-lg">
+    <div class="mb-4 shadow-lg card">
         <div class="card-body">
             <h5 class="card-title">Investor Information</h5>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong>Name:</strong> Dr. Woodrow Greenfelder Sr.</li>
-                <li class="list-group-item"><strong>Email:</strong> fahey.kristoffer@example.org</li>
-                <li class="list-group-item"><strong>Phone:</strong> +971832371426</li>
-                <li class="list-group-item"><strong>Company:</strong> Bernhard-Schimmel</li>
-                <li class="list-group-item"><strong>Investment Type:</strong> Angel Investment</li>
-                <li class="list-group-item"><strong>Favourite Investment Stage:</strong> Pre-Seed</li>
-                <li class="list-group-item"><strong>Budget Range:</strong> $100K to $500K</li>
-                <li class="list-group-item"><strong>Geographical Scope:</strong> Regional</li>
-                <li class="list-group-item"><strong>Co-Invest:</strong> Yes</li>
-                <li class="list-group-item"><strong>Investment Privacy Option:</strong> Keep my investments private</li>
-                <li class="list-group-item"><strong>Favourite Sectors:</strong> General Trade, Gaming, Healthcare & HealthTech, Social Innovation, Sports & Entertainment</li>
+                <li class="list-group-item"><strong>Name:</strong> {{ $investor->name }}</li>
+                <li class="list-group-item"><strong>Email:</strong> {{ $investor->email }}</li>
+                <li class="list-group-item"><strong>Phone:</strong> {{ $investor->phone_number }}</li>
+                <li class="list-group-item"><strong>Company:</strong> {{ $investor->company }}</li>
+                <li class="list-group-item"><strong>Investment Type:</strong> {{ $investor->investmentType->name }}</li>
+                <li class="list-group-item"><strong>Favourite Investment Stage:</strong> {{ $investor->favouriteInvestmentStage->name }}</li>
+                <li class="list-group-item"><strong>Budget Range:</strong> {{ $investor->budgetRange->name }}</li>
+                <li class="list-group-item"><strong>Geographical Scope:</strong> {{ $investor->geographicalScope->name }}</li>
+                <li class="list-group-item"><strong>Co-Invest:</strong> {{ $investor->coInvest->name }}</li>
+                <li class="list-group-item"><strong>Investment Privacy Option:</strong> {{ $investor->investmentPrivacyOption->name }}</li>
+                <li class="list-group-item"><strong>Favourite Sectors:</strong> {{ implode(', ', $investor->favouriteSectors->pluck('name')->toArray()) }}</li>
+                <li class="list-group-item"><strong>Additional Notes:</strong> {{ $investor->additional_notes ?? 'No additional notes' }}</li>
+                <li class="list-group-item"><strong>Created At:</strong> {{ $investor->created_at->format('Y-m-d H:i:s') }}</li>
             </ul>
         </div>
     </div>
-
-    
-
+{{-- 
     <!-- AI Response Card -->
-    @if(session('api_response'))
-        <div class="card mb-4 shadow-lg">
+    @if(session('api_response') || $aiResponse)
+        <div class="mb-4 shadow-lg card">
             <div class="card-body">
                 <h5 class="card-title">AI Generated Response</h5>
-                <pre class="json-container">{{ print_r(session('api_response'), true) }}</pre>
+                <pre class="json-container">
+                    {{ json_encode(session('api_response') ?? $aiResponse->response_data, JSON_PRETTY_PRINT) }}
+                </pre>
             </div>
         </div>
-    @endif
+    @endif --}}
 
-    <!-- Send Data Button -->
-    <form action="{{ route('investor.api.test.send', $investor->id) }}" method="POST">
-        @csrf
-        <button type="submit" class="btn btn-primary">Send Data to AI</button>
-    </form>
+    <!-- Action Buttons -->
+    <div class="d-flex justify-content-between">
+        <form action="{{ route('investor.api.test.send', $investor->id) }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-primary">Send Data to AI</button>
+        </form>
+
+        <!-- Back to Index Button -->
+        <a href="{{ route('investors') }}" class="btn btn-secondary">Back to Investors List</a>
+
+        <!-- View Response Button -->
+        @if($aiResponse)
+            <a href="{{ route('investor.response.view', $investor->id) }}" class="btn btn-success">View Response</a>
+        @endif
+    </div>
 </div>
 @endsection
 
@@ -77,6 +89,6 @@
         color: #333;
     }
     .list-group-item strong {
-        color: #5a5a5a;
+        color: #007bff;
     }
 </style>

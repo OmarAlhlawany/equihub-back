@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/investors/{investor}', [InvestorController::class, 'update'])->name('investors.update');
     Route::get('/investors/{investor}', [InvestorController::class, 'show'])->name('investors.show');
     Route::delete('/investors/{investor}', [InvestorController::class, 'destroy'])->name('investors.destroy');
-    
+
     // Startups Routes
     Route::get('/startups', [StartupController::class, 'index'])->name('startups');
     Route::get('/startups/create', [StartupController::class, 'create'])->name('startups.create');
@@ -70,6 +70,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/investors/{id}/test-api', [InvestorApiTestController::class, 'showTestPage'])->name('investor.api.test');
     Route::post('/investors/{id}/send-to-ai', [InvestorApiTestController::class,'sendInvestorData'])->name('investor.api.test.send');
+    Route::get('investors/{id}/ai-response', [InvestorApiTestController::class, 'viewAiResponse'])->name('investor.response.view');
 
     Route::get('/startups/{id}/test-api', [StartupApiTestController::class, 'showTestPage'])->name('startup.api.test');
     Route::post('/startups/{id}/send-to-ai', [StartupApiTestController::class, 'sendStartupData'])->name('startup.api.test.send');
