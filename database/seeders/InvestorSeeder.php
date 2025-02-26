@@ -10,6 +10,6 @@ class InvestorSeeder extends Seeder
     public function run()
     {
         // Create 20 investors using the factory
-        Investor::factory(10)->create();
+        Investor::factory(3)->create();
     }
 }

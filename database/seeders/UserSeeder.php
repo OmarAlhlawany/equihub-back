@@ -11,7 +11,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         // Loop to create 15 users
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             User::create([
                 'name' => 'Admin ' . ($i + 1), // Names from 'Admin 1' to 'Admin 15'
                 'email' => 'admin' . ($i + 1) . '@example.com', // Email: admin1@example.com to admin15@example.com
