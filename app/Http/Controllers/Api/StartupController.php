@@ -104,7 +104,7 @@ class StartupController extends Controller
 
         // API Client for AI request
         $client = new Client();
-        $url = 'http://85.31.236.242:5000/api/v1/nlp/index/answer/startups'; // Replace with actual AI endpoint
+        $url = 'http://85.31.236.242:5000/api/v1/nlp/pipeline/startup1o'; // Replace with actual AI endpoint
         $headers = [
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',

@@ -11,6 +11,7 @@ use App\Models\TargetMarket;
 use App\Models\YesNoOption;
 use Illuminate\Http\Request;
 
+
 class StartupController extends Controller
 {
     // Show startups with pagination and search functionality
