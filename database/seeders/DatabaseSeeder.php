@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(YesNoOptionSeeder::class);
         $this->call(InvestorSeeder::class);
+        $this->call(StartupSeeder::class);
 
     }
 }
