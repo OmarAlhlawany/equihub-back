@@ -42,7 +42,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TargetMarketSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(YesNoOptionSeeder::class);
-        $this->call(StartupSeeder::class);
         $this->call(InvestorSeeder::class);
 
     }

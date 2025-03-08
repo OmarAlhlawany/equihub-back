@@ -3,141 +3,135 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use GuzzleHttp\Client;
 use App\Models\Startup;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
 class StartupApiTestController extends Controller
 {
-    /**
-     * عرض صفحة الاختبار لاستقبال البيانات
-     */
     public function showTestPage($id)
     {
-        $startup = Startup::with([
-            'companySector',
-            'operationalPhase',
-            'fundingAmount',
-            'previousFundingSource',
-            'targetMarket',
-            'jointInvestment',
-            'existingPartners',
-            'isProfitable',
-            'haveDebts',
-            'hasExitStrategy'
-        ])->findOrFail($id);
+        $startup = Startup::findOrFail($id);
 
-        // تجهيز البيانات للعرض
-        $data = [
-            'id'                      => $startup->id,
-            'name'                    => $startup->name,
-            'email'                   => $startup->email,
-            'phone_number'            => $startup->phone_number,
-            'company'                 => $startup->company,
-            'website'                 => $startup->website,
-            'product_service_description' => $startup->product_service_description,
-            'category'                => optional($startup->companySector)->name, // تعديل ليتناسب مع API
-            'operational_phase'       => optional($startup->operationalPhase)->name,
-            'problem_solved'          => $startup->problem_solved,
-            'funding_amount'          => optional($startup->fundingAmount)->name,
-            'funding_used'            => $startup->funding_used,
-            'previous_funding_source' => optional($startup->previousFundingSource)->name,
-            'investment_type'         => 'SAFE', // افتراضًا أو جلبه من قاعدة البيانات
-            'existing_partners'       => optional($startup->existingPartners)->name,
-            'annual_revenue'          => $startup->monthly_revenue * 12, // تحويل الإيرادات الشهرية إلى سنوية
-            'is_profitable'           => optional($startup->isProfitable)->name,
-            'company_valuation'       => '4314922', // افتراضي أو جلبه من قاعدة البيانات
-            'break_even_goal'         => $startup->break_even_point, // تأكد من القيمة
-            'have_debts'              => optional($startup->haveDebts)->name,
-            'annual_growth'           => $startup->revenue_growth, // نسبة النمو السنوي
-            'exit_strategy'           => $startup->exit_strategy_details,
-            'has_exit_strategy'       => optional($startup->hasExitStrategy)->name
-        ];
+        // Add these helper methods to transform the data
+        $startup->sector_name = $this->getSectorName($startup->company_sector_id);
+        $startup->phase_name = $this->getOperationalPhaseName($startup->operational_phase_id);
+        $startup->funding_name = $this->getFundingAmountName($startup->funding_amount_id);
+        $startup->market_name = $this->getTargetMarketName($startup->target_market_id);
 
-        return view('startups.api_test', compact('startup', 'data'));
+        return view('startups.api_test', compact('startup'));
     }
 
-    /**
-     * إرسال بيانات الشركة الناشئة إلى API الذكاء الاصطناعي
-     */
     public function sendStartupData(Request $request, $id)
     {
-        $startup = Startup::with([
-            'companySector',
-            'operationalPhase',
-            'fundingAmount',
-            'previousFundingSource',
-            'targetMarket',
-            'jointInvestment',
-            'existingPartners',
-            'isProfitable',
-            'haveDebts',
-            'hasExitStrategy'
-        ])->findOrFail($id);
+        // Retrieve the startup
+        $startup = Startup::findOrFail($id);
 
-        // تجهيز البيانات للإرسال
+        // Construct API payload
         $data = [
-            'id'                      => $startup->id,
-            'name'                    => $startup->name,
-            'email'                   => $startup->email,
-            'phone_number'            => $startup->phone_number,
-            'company'                 => $startup->company,
-            'website'                 => $startup->website,
-            'product_service_description' => $startup->product_service_description,
-            'category'                => optional($startup->companySector)->name,
-            'operational_phase'       => optional($startup->operationalPhase)->name,
-            'problem_solved'          => $startup->problem_solved,
-            'funding_amount'          => optional($startup->fundingAmount)->name,
-            'funding_used'            => $startup->funding_used,
-            'previous_funding_source' => optional($startup->previousFundingSource)->name,
-            'investment_type'         => 'SAFE',
-            'existing_partners'       => optional($startup->existingPartners)->name,
-            'annual_revenue' => strval($startup->monthly_revenue * 12),
-            'is_profitable'           => optional($startup->isProfitable)->name,
-            'company_valuation'       => '4314922',
-            'break_even_goal'         => $startup->break_even_point,
-            'have_debts'              => optional($startup->haveDebts)->name,
-            'annual_growth' => strval($startup->revenue_growth),
-            'exit_strategy' => (string) ($startup->exit_strategy_details ?? ''),
-            'has_exit_strategy'       => optional($startup->hasExitStrategy)->name
-        ];
-                // تأكيد أن البيانات مرسلة في key اسمه startup_data
-        $payload = [
-            'startup_data' => [$data]
+            'json_data' => [
+                'type' => 'startup',
+                'id' => $startup->id,
+                'name' => $startup->name,
+                'company' => $startup->company,
+                'sector' => $this->getSectorName($startup->company_sector_id),
+                'operational_phase' => $this->getOperationalPhaseName($startup->operational_phase_id),
+                'funding_amount' => $this->getFundingAmountName($startup->funding_amount_id),
+                'target_market' => $this->getTargetMarketName($startup->target_market_id),
+                'revenue_growth' => $startup->revenue_growth,
+                'is_profitable' => $startup->is_profitable,
+                'employee_count' => $startup->employee_count,
+                'customer_count' => $startup->customer_count,
+                'monthly_revenue' => $startup->monthly_revenue,
+                'product_service_description' => $startup->product_service_description,
+                'problem_solved' => $startup->problem_solved
+            ]
         ];
 
-        // API Client
+        // Prepare client for making API request
         $client = new Client();
-        $url = 'http://85.31.236.242:5000/api/v1/nlp/pipeline/startup1o';
+        $url = 'http://85.31.236.242:5000/api/v1/nlp/index/answer/investorversionFullData'; // Replace with actual AI endpoint
         $headers = [
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer YOUR_API_KEY' // استبدل بمفتاح API الصحيح
+            'Authorization' => 'Bearer YOUR_API_KEY' // Add actual API key if required
         ];
 
         try {
-            // Log البيانات قبل الإرسال
-            Log::channel('custom_startup')->info('Final Payload Sent:', ['payload' => $payload]);
+            // Log the request payload for debugging
+            Log::info('Sending startup data to AI:', ['data' => $data]);
 
-            // إرسال البيانات إلى الذكاء الاصطناعي
+            // Send data to AI model
             $response = $client->post($url, [
-                'json'    => $payload,
+                'json' => $data,
                 'headers' => $headers
             ]);
 
-            // استقبال الرد
-            $body = json_decode($response->getBody(), true);
+            // Log the AI response for debugging
+            Log::info('AI Response:', ['response' => json_decode($response->getBody(), true)]);
 
-            // Log الرد
-            Log::channel('custom_startup')->info('AI Response:', ['response' => $body]);
-
-            return back()->with('success', 'تم إرسال بيانات الشركة بنجاح!');
-        } catch (\GuzzleHttp\Exception\RequestException $e) {
-            Log::channel('custom_startup')->error('GuzzleHttp RequestException:', ['message' => $e->getMessage()]);
-            return back()->with('error', 'فشل طلب الـ API: ' . $e->getMessage());
+            // Redirect back with success message
+            return back()->with('success', 'Startup data sent successfully for analysis!');
         } catch (\Exception $e) {
-            Log::channel('custom_startup')->error('General Exception:', ['message' => $e->getMessage()]);
-            return back()->with('error', 'حدث خطأ غير متوقع: ' . $e->getMessage());
+            Log::error('Error sending startup data to AI:', ['error' => $e->getMessage()]);
+            return back()->with('error', 'Failed to send data: ' . $e->getMessage());
         }
     }
+
+    private function getSectorName($id)
+    {
+        $sectors = [
+            1 => 'Technology',
+            2 => 'Fintech',
+            3 => 'HealthTech',
+            4 => 'Edtech',
+            5 => 'Ecommerce',
+            6 => 'Renewable Energy',
+            7 => 'Cybersecurity',
+            8 => 'AgriTech',
+            9 => 'PropTech',
+            10 => 'Gaming',
+            11 => 'Sports & Fitness',
+            12 => 'Logistics & Transportation',
+            13 => 'Food & Beverages',
+            14 => 'Sustainability',
+            15 => 'Artificial Intelligence',
+            16 => 'Other'
+        ];
+        return $sectors[$id] ?? 'Unknown';
     }
+
+    private function getOperationalPhaseName($id)
+    {
+        $phases = [
+            1 => 'Pre-Seed',
+            2 => 'Seed',
+            3 => 'Pre-Series A',
+            4 => 'Series A',
+            5 => 'Series B'
+        ];
+        return $phases[$id] ?? 'Unknown';
+    }
+
+    private function getFundingAmountName($id)
+    {
+        $amounts = [
+            1 => '$ 100K to $ 500K',
+            2 => '$ 500K to $ 1M',
+            3 => '$ 1M to $ 5M',
+            4 => '$ 5M+',
+            5 => 'Other'
+        ];
+        return $amounts[$id] ?? 'Unknown';
+    }
+
+    private function getTargetMarketName($id)
+    {
+        $markets = [
+            1 => 'Local (UAE)',
+            2 => 'Gulf',
+            3 => 'Regional'
+        ];
+        return $markets[$id] ?? 'Unknown';
+    }
+}
