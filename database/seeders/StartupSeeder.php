@@ -1946,34 +1946,6 @@ class StartupSeeder extends Seeder
                 'id' => 70,
                 'name' => 'Startup 70',
                 'email' => 'contact70@example.com',
-                'phone_number' => '+971413985611',
-                'company' => 'Company 70',
-                'website' => 'http://www.company70.com',
-                'product_service_description' => 'Innovative AI-driven solution',
-                'company_sector_id' => 4,
-                'operational_phase_id' => 5,
-                'problem_solved' => 'Addressing key industry challenges with AI',
-                'funding_amount_id' => 3,
-                'funding_used' => 'Product development and market expansion',
-                'previous_funding_source_id' => 1,
-                'target_market_id' => 2,
-                'joint_investment' => 1,
-                'existing_partners' => 1,
-                'monthly_revenue' => 401855.12,
-                'is_profitable' => 2,
-                'revenue_growth' => 46.23,
-                'revenue_goal' => 9928487.36,
-                'have_debts' => 2,
-                'debt_amount' => 438709.83,
-                'break_even_point' => '11 months',
-                'financial_goal' => 'Expand market reach and scale operations',
-                'has_exit_strategy' => 1,
-                'exit_strategy_details' => 'Acquisition'
-            ],
-            [
-                'id' => 70,
-                'name' => 'Startup 70',
-                'email' => 'contact70@example.com',
                 'phone_number' => '+971144745877',
                 'company' => 'Company 70',
                 'website' => 'http://www.company70.com',
@@ -2054,7 +2026,7 @@ class StartupSeeder extends Seeder
                 'has_exit_strategy' => 1,
                 'exit_strategy_details' => 'Acquisition'
             ],
-         
+
         ];
 
         DB::table('startups')->insert($startups);
