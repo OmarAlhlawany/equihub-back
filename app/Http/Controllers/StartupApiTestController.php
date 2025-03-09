@@ -26,50 +26,71 @@ class StartupApiTestController extends Controller
     {
         // Retrieve the startup
         $startup = Startup::findOrFail($id);
-
+    
         // Construct API payload
         $data = [
-            'json_data' => [
-                'type' => 'startup',
-                'id' => $startup->id,
-                'name' => $startup->name,
-                'company' => $startup->company,
-                'sector' => $this->getSectorName($startup->company_sector_id),
-                'operational_phase' => $this->getOperationalPhaseName($startup->operational_phase_id),
-                'funding_amount' => $this->getFundingAmountName($startup->funding_amount_id),
-                'target_market' => $this->getTargetMarketName($startup->target_market_id),
-                'revenue_growth' => $startup->revenue_growth,
-                'is_profitable' => $startup->is_profitable,
-                'employee_count' => $startup->employee_count,
-                'customer_count' => $startup->customer_count,
-                'monthly_revenue' => $startup->monthly_revenue,
-                'product_service_description' => $startup->product_service_description,
-                'problem_solved' => $startup->problem_solved
+            'startup_data' => [
+                [
+                    'type' => 'startup',
+                    'id' => $startup->id,
+                    'name' => $startup->name,
+                    'email' => $startup->email,
+                    'phone_number' => $startup->phone_number,
+                    'company' => $startup->company,
+                    'company_sector_id' => (string)$startup->company_sector_id,
+                    'sector' => $this->getSectorName($startup->company_sector_id),
+                    'operational_phase' => $this->getOperationalPhaseName($startup->operational_phase_id),
+                    'operational_phase_id' => (string)$startup->operational_phase_id,
+                    'funding_amount' => $this->getFundingAmountName($startup->funding_amount_id),
+                    'funding_amount_id' => (string)$startup->funding_amount_id,
+                    'funding_used' => $startup->funding_used,
+                    'previous_funding_source_id' => (string)$startup->previous_funding_source_id,
+                    'target_market' => $this->getTargetMarketName($startup->target_market_id),
+                    'target_market_id' => (string)$startup->target_market_id,
+                    'revenue_growth' => $startup->revenue_growth,
+                    'is_profitable' => $startup->is_profitable ? 'yes' : 'no',
+                    'employee_count' => $startup->employee_count,
+                    'customer_count' => $startup->customer_count,
+                    'monthly_revenue' => $startup->monthly_revenue,
+                    'product_service_description' => $startup->product_service_description,
+                    'problem_solved' => $startup->problem_solved,
+                    'company_valuation' => $startup->company_valuation,
+                    'annual_revenue' => $startup->annual_revenue,
+                    'website' => $startup->website,
+                    'joint_investment' => (string)$startup->joint_investment,
+                    'existing_partners' => (string)$startup->existing_partners,
+                    'revenue_goal' => $startup->revenue_goal,
+                    'have_debts' => $startup->have_debts ? 'yes' : 'no',
+                    'debt_amount' => $startup->debt_amount,
+                    'break_even_point' => $startup->break_even_point,
+                    'financial_goal' => $startup->financial_goal,
+                    'has_exit_strategy' => (string)$startup->has_exit_strategy // إضافة حقل has_exit_strategy
+                ]
             ]
         ];
-
+    
         // Prepare client for making API request
         $client = new Client();
-        $url = 'http://85.31.236.242:5000/api/v1/nlp/index/answer/investorversionFullData'; // Replace with actual AI endpoint
+        $url = 'http://85.31.236.242:5000/api/v1/nlp/pipeline/startup1o';
         $headers = [
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer YOUR_API_KEY' // Add actual API key if required
+            'Authorization' => 'Bearer YOUR_API_KEY'
         ];
-
+    
         try {
             // Log the request payload for debugging
             Log::info('Sending startup data to AI:', ['data' => $data]);
-
+    
             // Send data to AI model
             $response = $client->post($url, [
                 'json' => $data,
                 'headers' => $headers
             ]);
-
+    
             // Log the AI response for debugging
             Log::info('AI Response:', ['response' => json_decode($response->getBody(), true)]);
-
+    
             // Redirect back with success message
             return back()->with('success', 'Startup data sent successfully for analysis!');
         } catch (\Exception $e) {
@@ -77,6 +98,18 @@ class StartupApiTestController extends Controller
             return back()->with('error', 'Failed to send data: ' . $e->getMessage());
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
 
     private function getSectorName($id)
     {
