@@ -1,89 +1,193 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h2 class="text-center mb-4" style="color: #2B37A0; font-weight: bold;">Investor Details</h2>
+    <div class="container py-4">
+        <div class="text-center mb-4">
+            <h2 style="color: #2B37A0; font-weight: bold; font-size: 30px;">Investor Details</h2>
+        </div>
 
-    <div class="card shadow-lg" style="max-width: 800px; margin: auto; border-radius: 15px;">
-        <div class="card-body">
-            <h5 class="card-title" style="color: #2B37A0; font-weight: bold; font-size: 24px;">{{ $investor->name }}</h5>
-            <hr>
-            <p class="card-text" style="color: #333; font-size: 16px;">
-                <strong>Email:</strong> {{ $investor->email }} <br>
-                <strong>Phone:</strong> {{ $investor->phone_number }} <br>
-                <strong>Company:</strong> {{ $investor->company }} <br>
-                
-                <strong>Investment Type:</strong> {{ $investor->investmentType->name ?? 'N/A' }} <br>
-                <strong>Favourite Investment Stage:</strong> {{ $investor->favouriteInvestmentStage->name ?? 'N/A' }} <br>
-                
-                <strong>Favourite Sectors:</strong> 
-                <ul style="margin-top: 5px; padding-left: 20px;">
-                    @forelse ($investor->favouriteSectors as $sector)
-                        <li>{{ $sector->name }}</li>
-                    @empty
-                        <li>N/A</li>
-                    @endforelse
-                </ul>
+        <div class="card shadow-lg" style="border-radius: 15px; overflow: hidden;">
+            <!-- Header Section -->
+            <div class="card-header bg-white border-bottom" style="padding: 20px;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0" style="color: #2B37A0; font-weight: bold;">{{ $investor->name }}</h3>
+                    <div>
+                        <a href="{{ route('investors.edit', $investor->id) }}" class="btn btn-outline-primary me-2"
+                            style="border-radius: 20px;">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a href="{{ route('investors') }}" class="btn btn-outline-secondary" style="border-radius: 20px;">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-                <strong>Budget:</strong> {{ $investor->budgetRange->name ?? 'N/A' }} <br>
-                @if($investor->budget_range_id == 'other')
-                    <strong>Other Budget:</strong> ${{ number_format($investor->other_budget, 2) }} <br>
+            <div class="card-body">
+                <!-- Personal Information -->
+                <div class="section mb-4">
+                    <h5 class="section-title"
+                        style="color: #2B37A0; border-bottom: 2px solid #2B37A0; padding-bottom: 10px;">
+                        <i class="fas fa-user"></i> Personal Information
+                    </h5>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="info-item">
+                                <label class="text-muted">Email</label>
+                                <p class="mb-0">{{ $investor->email }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-item">
+                                <label class="text-muted">Phone</label>
+                                <p class="mb-0">{{ $investor->phone_number }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-item">
+                                <label class="text-muted">Company</label>
+                                <p class="mb-0">{{ $investor->company }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Investment Preferences -->
+                <div class="section mb-4">
+                    <h5 class="section-title"
+                        style="color: #2B37A0; border-bottom: 2px solid #2B37A0; padding-bottom: 10px;">
+                        <i class="fas fa-chart-pie"></i> Investment Preferences
+                    </h5>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="info-card bg-light p-3 rounded">
+                                <label class="text-muted">Investment Type</label>
+                                <h5 class="mb-0">{{ $investor->investmentType->name ?? 'N/A' }}</h5>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-card bg-light p-3 rounded">
+                                <label class="text-muted">Favourite Investment Stage</label>
+                                <h5 class="mb-0">{{ $investor->favouriteInvestmentStage->name ?? 'N/A' }}</h5>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-card bg-light p-3 rounded">
+                                <label class="text-muted">Budget Range</label>
+                                <h5 class="mb-0">{{ $investor->budgetRange->name ?? 'N/A' }}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="info-item">
+                                <label class="text-muted">Favourite Sectors</label>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @forelse ($investor->favouriteSectors as $sector)
+                                        <span class="badge bg-primary">{{ $sector->name }}</span>
+                                    @empty
+                                        <span class="text-muted">No sectors specified</span>
+                                    @endforelse
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Investment Settings -->
+                <div class="section mb-4">
+                    <h5 class="section-title"
+                        style="color: #2B37A0; border-bottom: 2px solid #2B37A0; padding-bottom: 10px;">
+                        <i class="fas fa-cog"></i> Investment Settings
+                    </h5>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div
+                                class="status-badge {{ $investor->coInvest->name == 'yes' ? 'bg-success' : 'bg-warning' }} text-white p-2 rounded text-center">
+                                <i class="fas {{ $investor->coInvest->name == 'yes' ? 'fa-check' : 'fa-times' }} me-2"></i>
+                                Co-Investment: {{ $investor->coInvest->name ?? 'N/A' }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-item">
+                                <label class="text-muted">Geographical Scope</label>
+                                <p class="mb-0">{{ $investor->geographicalScope->name ?? 'N/A' }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-item">
+                                <label class="text-muted">Investment Privacy</label>
+                                <p class="mb-0">{{ $investor->investmentPrivacyOption->name ?? 'N/A' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Information -->
+                @if($investor->additional_notes)
+                    <div class="section">
+                        <h5 class="section-title"
+                            style="color: #2B37A0; border-bottom: 2px solid #2B37A0; padding-bottom: 10px;">
+                            <i class="fas fa-sticky-note"></i> Additional Notes
+                        </h5>
+                        <div class="info-item">
+                            <p class="mb-0">{{ $investor->additional_notes }}</p>
+                        </div>
+                    </div>
                 @endif
-                
-                <strong>Geographical Scope:</strong> {{ $investor->geographicalScope->name ?? 'N/A' }} <br>
-                <strong>Co-Investment:</strong> {{ $investor->coInvest->name ?? 'N/A' }} <br>
-                <strong>Investment Privacy:</strong> {{ $investor->investmentPrivacyOption->name ?? 'N/A' }} <br>
-                
-                <strong>Additional Notes:</strong> {{ $investor->additional_notes ?? 'No additional notes' }} <br>
-            </p>
-
-            <div class="d-flex justify-content-between mt-4">
-                <a href="{{ route('investors.edit', $investor->id) }}" class="btn btn-warning"
-                   style="height: 40px; padding: 5px 15px; font-size: 16px; border-radius: 50px; background-color: white; color: #000000; border: 1px solid #000000; transition: 0.3s;" 
-                   onmouseover="this.style.backgroundColor='#2B37A0'; this.style.color='white';" 
-                   onmouseout="this.style.backgroundColor='white'; this.style.color='#000000';">
-                    Edit
-                </a>
-
-                <form action="{{ route('investors.destroy', $investor->id) }}" method="POST" id="delete-form">
-                    @csrf
-                    @method('DELETE')
-                    <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $investor->id }})"
-                        style="height: 40px; padding: 5px 15px; font-size: 16px; border-radius: 50px; background-color: white; color: #d9534f; border: 1px solid #d9534f; transition: 0.3s;" 
-                        onmouseover="this.style.backgroundColor='#d9534f'; this.style.color='white';" 
-                        onmouseout="this.style.backgroundColor='white'; this.style.color='#d9534f';">
-                        Delete
-                    </button>
-                </form>
-
-                <a href="{{ route('investors') }}" class="btn"
-                   style="height: 40px; padding: 5px 15px; font-size: 16px; border-radius: 50px; background-color: white; color: #000000; border: 1px solid #000000; transition: 0.3s;" 
-                   onmouseover="this.style.backgroundColor='#2B37A0'; this.style.color='white';" 
-                   onmouseout="this.style.backgroundColor='white'; this.style.color='#000000';">
-                    Back to List
-                </a>
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    function confirmDelete(investorId) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d9534f',
-            cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Yes, delete it!',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('delete-form').submit();
-            }
-        });
-    }
-</script>
+    <style>
+        .section {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+        }
 
+        .info-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            height: 100%;
+        }
+
+        .info-item label {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .info-card {
+            transition: transform 0.2s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .status-badge {
+            transition: transform 0.2s;
+        }
+
+        .status-badge:hover {
+            transform: translateY(-3px);
+        }
+
+        .section-title {
+            margin-bottom: 20px;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+        }
+
+        .badge {
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            border-radius: 20px;
+        }
+    </style>
 @endsection

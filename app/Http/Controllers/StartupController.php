@@ -11,6 +11,8 @@ use App\Models\TargetMarket;
 use App\Models\YesNoOption;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Log;
+
 
 class StartupController extends Controller
 {
@@ -57,6 +59,9 @@ class StartupController extends Controller
     // Store a new startup
     public function store(Request $request)
     {
+
+        Log::info('Store Startup:', $request->all());
+
         $validated = $request->validate([
             'name' => 'required|min:3|max:50',
             'email' => 'required|email|unique:startups,email',
@@ -66,9 +71,9 @@ class StartupController extends Controller
             'product_service_description' => 'required|min:10',
             'company_sector_id' => 'required|exists:company_sectors,id',
             'operational_phase_id' => 'required|exists:operational_phases,id',
-            'problem_solved' => 'required|min:20',
+            'problem_solved' => 'required|min:10',
             'funding_amount_id' => 'required|exists:funding_amounts,id',
-            'funding_used' => 'required|min:20',
+            'funding_used' => 'required|min:10',
             'previous_funding_source_id' => 'required|exists:funding_sources,id',
             'target_market_id' => 'required|exists:target_markets,id',
             'joint_investment' => 'required|exists:yes_no_options,id',
@@ -80,21 +85,23 @@ class StartupController extends Controller
             'have_debts' => 'required|exists:yes_no_options,id',
             'debt_amount' => 'nullable|numeric|min:0',
             'break_even_point' => 'required|string',
-            'financial_goal' => 'required|min:20',
+            'financial_goal' => 'required|min:10',
             'has_exit_strategy' => 'required|exists:yes_no_options,id',
             'exit_strategy_details' => 'nullable|string',
         ]);
 
+        Log::info('Validated Data:', $validated);
+
         Startup::create($validated);
+
+        Log::info('Startup Created Successfully', ['name' => $validated['name']]);
 
         return redirect()->route('startups')->with('success', 'Startup added successfully!');
     }
 
     // Show startup data for editing
-    public function edit($id)
+    public function edit(Startup $startup)
     {
-        $startup = Startup::findOrFail($id);
-
         return view('startups.edit', [
             'startup' => $startup,
             'companySectors' => CompanySector::all(),
@@ -109,6 +116,8 @@ class StartupController extends Controller
     // Update startup data
     public function update(Request $request, $id)
     {
+        Log::info('Update Startup Request:', $request->all());
+
         $validated = $request->validate([
             'name' => 'required|min:3|max:50',
             'email' => 'required|email|unique:startups,email,' . $id,
@@ -118,9 +127,9 @@ class StartupController extends Controller
             'product_service_description' => 'required|min:10',
             'company_sector_id' => 'required|exists:company_sectors,id',
             'operational_phase_id' => 'required|exists:operational_phases,id',
-            'problem_solved' => 'required|min:20',
+            'problem_solved' => 'required|min:10',
             'funding_amount_id' => 'required|exists:funding_amounts,id',
-            'funding_used' => 'required|min:20',
+            'funding_used' => 'required|min:10',
             'previous_funding_source_id' => 'required|exists:funding_sources,id',
             'target_market_id' => 'required|exists:target_markets,id',
             'joint_investment' => 'required|exists:yes_no_options,id',
@@ -132,13 +141,17 @@ class StartupController extends Controller
             'have_debts' => 'required|exists:yes_no_options,id',
             'debt_amount' => 'nullable|numeric|min:0',
             'break_even_point' => 'required|string',
-            'financial_goal' => 'required|min:20',
+            'financial_goal' => 'required|min:10',
             'has_exit_strategy' => 'required|exists:yes_no_options,id',
             'exit_strategy_details' => 'nullable|string',
         ]);
 
+        Log::info('Validated Update Data:', $validated);
+
         $startup = Startup::findOrFail($id);
         $startup->update($validated);
+
+        Log::info('Startup Updated Successfully', ['id' => $id, 'name' => $validated['name']]);
 
         return redirect()->route('startups')->with('success', 'Startup updated successfully!');
     }

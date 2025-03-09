@@ -70,36 +70,42 @@ class StartupController extends Controller
     {
         // Prepare the data to send to the AI
         $data = [
-            'json_data' => [
-                'type' => 'startup',
-                'id' => $startup->id,
-                'name' => $startup->name,
-                'email' => $startup->email,
-                'phone' => $startup->phone_number,
-                'company' => $startup->company,
-                'website' => $startup->website,
-                'product_service_description' => $startup->product_service_description,
-                'company_sector' => optional($startup->companySector)->name,
-                'operational_phase' => optional($startup->operationalPhase)->name,
-                'problem_solved' => $startup->problem_solved,
-                'funding_amount' => optional($startup->fundingAmount)->name,
-                'funding_used' => $startup->funding_used,
-                'previous_funding_source' => optional($startup->previousFundingSource)->name,
-                'target_market' => optional($startup->targetMarket)->name,
-                'joint_investment' => optional($startup->jointInvestment)->name,
-                'existing_partners' => optional($startup->existingPartners)->name,
-                'monthly_revenue' => $startup->monthly_revenue,
-                'is_profitable' => optional($startup->isProfitable)->name,
-                'revenue_growth' => $startup->revenue_growth,
-                'revenue_goal' => $startup->revenue_goal,
-                'have_debts' => optional($startup->haveDebts)->name,
-                'debt_amount' => $startup->debt_amount,
-                'break_even_point' => $startup->break_even_point,
-                'financial_goal' => $startup->financial_goal,
-                'has_exit_strategy' => optional($startup->hasExitStrategy)->name,
-                'exit_strategy_details' => $startup->exit_strategy_details,
-            ],
-            'limit' => 5
+            'startup_data' => [
+                [
+                    'type' => 'startup',
+                    'id' => $startup->id,
+                    'name' => $startup->name,
+                    'email' => $startup->email,
+                    'phone_number' => $startup->phone_number,
+                    'company' => $startup->company,
+                    'company_sector_id' => (string)$startup->company_sector_id,
+                    'sector' => $this->getSectorName($startup->company_sector_id),
+                    'operational_phase' => $this->getOperationalPhaseName($startup->operational_phase_id),
+                    'operational_phase_id' => (string)$startup->operational_phase_id,
+                    'funding_amount' => $this->getFundingAmountName($startup->funding_amount_id),
+                    'funding_amount_id' => (string)$startup->funding_amount_id,
+                    'funding_used' => $startup->funding_used,
+                    'previous_funding_source_id' => (string)$startup->previous_funding_source_id,
+                    'target_market' => $this->getTargetMarketName($startup->target_market_id),
+                    'target_market_id' => (string)$startup->target_market_id,
+                    'revenue_growth' => $startup->revenue_growth,
+                    'is_profitable' => $startup->is_profitable ? 'yes' : 'no',
+                    'monthly_revenue' => $startup->monthly_revenue,
+                    'product_service_description' => $startup->product_service_description,
+                    'problem_solved' => $startup->problem_solved,
+                    'company_valuation' => $startup->company_valuation,
+                    'annual_revenue' => $startup->annual_revenue,
+                    'website' => $startup->website,
+                    'joint_investment' => (string)$startup->joint_investment,
+                    'existing_partners' => (string)$startup->existing_partners,
+                    'revenue_goal' => $startup->revenue_goal,
+                    'have_debts' => $startup->have_debts ? 'yes' : 'no',
+                    'debt_amount' => $startup->debt_amount,
+                    'break_even_point' => $startup->break_even_point,
+                    'financial_goal' => $startup->financial_goal,
+                    'has_exit_strategy' => (string)$startup->has_exit_strategy // إضافة حقل has_exit_strategy
+                ]
+            ]
         ];
 
         // API Client for AI request
