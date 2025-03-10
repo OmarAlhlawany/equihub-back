@@ -67,7 +67,6 @@
                 
         /* Remove borders from input fields */
         .form-control {
-            border: none;
             border: 1px solid #F0F0F0; /* Light border */
             border-radius: 5px;
             box-shadow: none;
@@ -79,6 +78,13 @@
             border-color: #1c1f7b;
             box-shadow: none;
         }
+
+        .form-control:focus,
+        .form-control:hover {
+            border-color: #1c1f7b !important; /* لون الـ hover */
+            box-shadow: 0 0 5px rgba(28, 31, 123, 0.5); /* لمعان خفيف */
+        }
+
         .login-card-body .input-group .form-control, .register-card-body .input-group .form-control {
             border-right: 0;
             margin-bottom: 20px;
@@ -107,6 +113,14 @@
             background: transparent;
             border: none;
             color: #2B37A0;
+        }
+        .input-group .form-control {
+            border-right: 1px solid #F0F0F0 !important;
+        }
+
+        .input-group .form-control:focus,
+        .input-group .form-control:hover {
+            border-color: #1c1f7b !important;
         }
 
     </style>
