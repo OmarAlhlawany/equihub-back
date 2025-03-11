@@ -2,35 +2,38 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Route;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
     /**
-     * The path to the "home" route for your application.
+     * The path to your application's "home" route.
+     *
+     * Typically, users are redirected here after authentication.
      *
      * @var string
      */
     public const HOME = '/dashboard';
 
     /**
-     * Define your route model bindings, pattern filters, and other route services.
-     *
-     * @return void
+     * Define your route model bindings, pattern filters, and other route configuration.
      */
-    public function boot()
+    public function boot(): void
     {
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
+
         $this->routes(function () {
-            // Define API routes without any middleware
-            Route::prefix('api')  // API routes will have the 'api' prefix
-                ->middleware('api')
-                ->namespace($this->namespace)
+            Route::middleware('api')
+                ->prefix('api')
                 ->group(base_path('routes/api.php'));
 
-            // Define web routes with the 'web' middleware
-            Route::middleware('web')  // Web routes will have the 'web' middleware
-                ->namespace($this->namespace)
+            Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
     }

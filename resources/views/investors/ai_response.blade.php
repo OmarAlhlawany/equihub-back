@@ -54,13 +54,13 @@
                                     <svg viewBox="0 0 36 36" class="circular-chart">
                                         <path
                                             d="M18 2.0845
-                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831"
                                             fill="none" stroke="#eee" stroke-width="3" stroke-dasharray="100, 100" />
                                         <path
                                             d="M18 2.0845
-                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831"
                                             fill="none" stroke="#2B37A0" stroke-width="3"
                                             stroke-dasharray="{{ $startup->matching_percentage }}, 100"
                                             class="percentage-indicator" />
@@ -191,11 +191,13 @@
 
                                     <!-- Action Buttons -->
                                     <div class="card-actions">
-                                        <button class=view-details-btn onclick="window.location.href='{{ route('startups.show', $startup->id) }}'" class="action-button secondary">
+                                        <button class=view-details-btn
+                                            onclick="window.location.href='{{ route('startups.show', $startup->id) }}'"
+                                            class="action-button secondary">
                                             <i class="fas fa-info-circle"></i>
                                             View Details
                                         </button>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -215,6 +217,12 @@
 
         <!-- Navigation -->
         <div class="text-center mt-5 animate-fade-in" style="animation-delay: 0.5s">
+            <a href="{{ route('investors.pdf.ai_response.en', ['investor' => $investor->id]) }}" class="btn btn-primary">
+                <i class="fas fa-file-pdf"></i> Download English PDF
+            </a>
+            <a href="{{ route('investors.pdf.ai_response.ar', ['investor' => $investor->id]) }}" class="btn btn-secondary">
+                <i class="fas fa-file-pdf"></i> تحميل PDF بالعربية
+            </a>
             <a href="{{ route('investor.api.test', $investor->id) }}" class="back-button">
                 <i class="fas fa-arrow-left mr-2"></i> Back to Investor Overview
             </a>

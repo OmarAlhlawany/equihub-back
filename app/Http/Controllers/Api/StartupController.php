@@ -46,7 +46,7 @@ class StartupController extends Controller
             'have_debts' => 'required|exists:yes_no_options,id',
             'debt_amount' => 'nullable|numeric|min:0',
             'break_even_point' => 'required|string',
-            'financial_goal' => 'required|min:20',
+            'financial_goal' => 'required|min:10',
             'has_exit_strategy' => 'required|exists:yes_no_options,id',
             'exit_strategy_details' => 'nullable|string',
         ]);

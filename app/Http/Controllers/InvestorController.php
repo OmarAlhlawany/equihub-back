@@ -11,6 +11,16 @@ use App\Models\YesNoOption;
 use App\Models\InvestmentPrivacyOption;
 use App\Models\FavouriteSector;
 use Illuminate\Http\Request;
+use App\Http\Controllers\InvestorApiTestController;
+use Illuminate\Support\Str;
+use App\Models\AiResponse;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Normalizer;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Log;
+use App\Models\Startup;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 
 class InvestorController extends Controller
 {

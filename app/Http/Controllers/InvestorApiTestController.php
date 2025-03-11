@@ -473,4 +473,54 @@ class InvestorApiTestController extends Controller
 
         return $data;
     }
+
+    /**
+     * Get AI response data for an investor
+     */
+    public function getAiResponseData($id)
+    {
+        $investor = Investor::with([
+            'favouriteSectors',
+            'budgetRange',
+            'geographicalScope',
+            'favouriteInvestmentStage',
+            'coInvest',
+            'investmentPrivacyOption'
+        ])->findOrFail($id);
+
+        // Get the stored AI response from the session
+        $aiResponse = session()->get('ai_response_' . $id);
+
+        if (!$aiResponse) {
+            return [
+                'startups' => collect(),
+                'investor' => $investor
+            ];
+        }
+
+        // Process the AI response data
+        $startups = collect($aiResponse)->map(function ($startup) {
+            return (object) [
+                'id' => $startup['id'] ?? null,
+                'name' => $startup['name'] ?? '',
+                'company' => $startup['company'] ?? '',
+                'sector_name' => $startup['sector_name'] ?? '',
+                'phase_name' => $startup['phase_name'] ?? '',
+                'funding_name' => $startup['funding_name'] ?? '',
+                'market_name' => $startup['market_name'] ?? '',
+                'revenue_growth' => $startup['revenue_growth'] ?? 0,
+                'is_profitable' => $startup['is_profitable'] ?? false,
+                'matching_percentage' => $startup['matching_percentage'] ?? 0,
+                'sector_match_score' => $startup['sector_match_score'] ?? 0,
+                'stage_match_score' => $startup['stage_match_score'] ?? 0,
+                'budget_match_score' => $startup['budget_match_score'] ?? 0,
+                'geographic_match_score' => $startup['geographic_match_score'] ?? 0,
+            ];
+        });
+
+        return [
+            'startups' => $startups,
+            'investor' => $investor
+        ];
+    }
 }

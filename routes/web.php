@@ -11,6 +11,8 @@ use App\Http\Controllers\InvestorInsightController;
 use App\Http\Controllers\StartupInsightController;
 use App\Http\Controllers\InvestorApiTestController;
 use App\Http\Controllers\StartupApiTestController;
+use App\Http\Controllers\ArabicPdfReportController;
+use App\Http\Controllers\EnglishPdfReportController;
 
 
 // Redirect root to login page
@@ -22,6 +24,7 @@ Route::get('/', function () {
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 
 // Group routes that require authentication
 Route::middleware(['auth'])->group(function () {
@@ -37,6 +40,14 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/investors/{investor}', [InvestorController::class, 'update'])->name('investors.update');
     Route::get('/investors/{investor}', [InvestorController::class, 'show'])->name('investors.show');
     Route::delete('/investors/{investor}', [InvestorController::class, 'destroy'])->name('investors.destroy');
+
+    // Arabic PDF Report Routes
+    Route::get('/investors/{investor}/pdf/ai-response/ar', [ArabicPdfReportController::class, 'downloadAiResponse'])
+        ->name('investors.pdf.ai_response.ar');
+
+    // English PDF Report Routes
+    Route::get('/investors/{investor}/pdf/ai-response/en', [EnglishPdfReportController::class, 'downloadAiResponse'])
+        ->name('investors.pdf.ai_response.en');
 
     // Startups Routes
     Route::get('/startups', [StartupController::class, 'index'])->name('startups');
@@ -69,10 +80,11 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/investors/{id}/test-api', [InvestorApiTestController::class, 'showTestPage'])->name('investor.api.test');
-    Route::post('/investors/{id}/send-to-ai', [InvestorApiTestController::class,'sendInvestorData'])->name('investor.api.test.send');
+    Route::post('/investors/{id}/send-to-ai', [InvestorApiTestController::class, 'sendInvestorData'])->name('investor.api.test.send');
     Route::get('investors/{id}/ai-response', [InvestorApiTestController::class, 'viewAiResponse'])->name('investor.response.view');
 
     Route::get('/startups/{id}/test-api', [StartupApiTestController::class, 'showTestPage'])->name('startup.api.test');
     Route::post('/startups/{id}/send-to-ai', [StartupApiTestController::class, 'sendStartupData'])->name('startup.api.test.send');
 
 });
+
