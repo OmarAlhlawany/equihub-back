@@ -11,7 +11,7 @@
         "fakerphp/faker": "^1.9.1",
         "jeroennoten/laravel-adminlte": "^3.14",
         "khaled.alshamaa/ar-php": "^7.0",
-        "laravel/framework": "^10.10",
+        "laravel/framework": "^12.1",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8"
     },
