@@ -232,14 +232,12 @@
         <input type="checkbox" class="form-check-input" id="remember" name="remember">
         <label class="form-check-label" for="remember">Remember me</label>
     </div>
-    <a href="" class="forgot-password">Forgot Password?</a>
+    
 </div>
 
             <button type="submit" class="btn btn-login">Login</button>
 
-            <div class="signup-text">
-                <span>New User?</span> <a href="">SIGN UP HERE</a>
-            </div>
+            
         </form>
     </div>
 
