@@ -18,30 +18,39 @@ class StartupController extends Controller
 {
     // Show startups with pagination and search functionality
     public function index(Request $request)
-    {
-        $searchField = $request->input('search_field');
-        $searchValue = $request->input('search_value');
+{
+    $searchField = $request->input('search_field');
+    $searchValue = $request->input('search_value');
 
-        $query = Startup::with([
-            'companySector',
-            'operationalPhase',
-            'fundingAmount',
-            'previousFundingSource',
-            'targetMarket',
-            'jointInvestment',
-            'existingPartners',
-            'isProfitable',
-            'haveDebts',
-            'hasExitStrategy'
-        ]);
+    $query = Startup::with([
+        'companySector',
+        'operationalPhase',
+        'fundingAmount',
+        'previousFundingSource',
+        'targetMarket',
+        'jointInvestment',
+        'existingPartners',
+        'isProfitable',
+        'haveDebts',
+        'hasExitStrategy'
+    ]);
 
-        if ($searchField && $searchValue) {
-            $query->where($searchField, 'LIKE', "%{$searchValue}%");
-        }
-
-        $startups = $query->paginate(10);
-        return view('startups.index', compact('startups'));
+    // Apply search filter if both field and value exist
+    if ($searchField && $searchValue) {
+        $query->where($searchField, 'LIKE', "%{$searchValue}%");
     }
+
+    // Apply sorting if present
+    if ($request->has('sort')) {
+        $direction = $request->input('direction', 'asc');
+        $query->orderBy($request->input('sort'), $direction);
+    }
+
+    $startups = $query->paginate(10);
+
+    return view('startups.index', compact('startups'));
+}
+
 
     // Show the form to create a new startup
     public function create()
