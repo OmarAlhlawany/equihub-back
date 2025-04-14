@@ -12,31 +12,91 @@
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
     <style>
-        /* Background Image for Content Wrapper */
-        .content-wrapper {
-            background: url('{{ asset('images/background.svg') }}') no-repeat center center fixed;
-            background-size: cover;
+        /* Global Styles */
+        body {
+            background-color: #F2F7FD !important;
         }
 
-        /* Center the navbar title with equal spacing between items */
-        .navbar-nav {
+        /* Navbar Styles */
+        .main-header {
+            background-color: white !important;
+            border-bottom: 1px solid #E5E7EB;
+            height: 70px;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
         }
 
-        /* Centered Navbar Title */
-        .navbar-brand {
-            font-size: 32px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-weight: bold;
-            text-align: center;
+        .main-header .navbar-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Sidebar Overlay Styles */
+        .main-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 1040;
+            transition: width 0.3s ease;
+            width: 70px;
+        }
+
+        /* Content Wrapper Styles */
+        .content-wrapper {
+            background-color: #F2F7FD !important;
+            margin-left: 70px;
+            padding-top: 70px;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Expanded Sidebar Styles */
+        .main-sidebar:hover {
+            width: 250px;
+        }
+
+        .main-sidebar:hover+.content-wrapper {
+            margin-left: 250px;
+        }
+
+        /* Logout Button Styles */
+        .logout-btn {
+            background-color: transparent;
+            border: none;
+            color: #6B7280;
+            transition: color 0.3s ease;
+        }
+
+        .logout-btn:hover {
             color: #2B37A0;
-            flex-grow: 1;
-            /* Allows the title to take available space */
-            margin-left: 300px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 767px) {
+            .main-sidebar {
+                width: 0;
+            }
+
+            .content-wrapper {
+                margin-left: 0;
+            }
+        }
+
+        /* Complete override for all states */
+        .layout-fixed .content-wrapper,
+        .layout-fixed .main-footer,
+        .layout-fixed .main-header {
+            margin-left: 70px !important;
         }
     </style>
 </head>
@@ -46,31 +106,21 @@
     <div class="wrapper">
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand">
-
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-            </ul>
-
-            <!-- Dynamic Page Title -->
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <span class="navbar-brand">@yield('page-title', 'Dashboard')</span>
-                </li>
+                <!-- Sidebar Toggle (Removed) -->
             </ul>
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-danger"
-                            style="border-radius: 50px; margin-right: 20px;">Logout</button>
+                        <button type="submit" class="btn logout-btn" style="margin-left: 20px; font-size: 1.5rem;">
+                            <i class="bi bi-box-arrow-left"></i>
+                        </button>
                     </form>
                 </li>
             </ul>
         </nav>
-
 
         <!-- Include Sidebar -->
         @include('layouts.sidebar')
@@ -78,7 +128,7 @@
         <!-- Content Wrapper -->
         <div class="content-wrapper">
             <section class="content">
-                <div class="container-fluid pt-3">
+                <div class="container-fluid pt-4">
                     @yield('content')
                 </div>
             </section>
@@ -89,6 +139,13 @@
     <!-- AdminLTE Scripts -->
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('adminlte/js/adminlte.min.js') }}"></script>
+
+    <script>
+        // Ensure sidebar starts in collapsed state
+        document.addEventListener('DOMContentLoaded', function () {
+            document.body.classList.add('sidebar-mini');
+        });
+    </script>
 </body>
 
 </html>

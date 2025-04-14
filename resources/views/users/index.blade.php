@@ -1,68 +1,143 @@
 @extends('layouts.app')
-@section('page-title', 'Accounts')
 
 @section('content')
-<div class="container">
-
-    <!-- Success message -->
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+    <div class="container-fluid">
+        <div class="mb-4">
+            <h1 class="text-left " 
+            style="color: #374151;
+            font-size: 36px;
+            font-weight: 500;">Accounts</h1>
+            <p class="text-left" 
+            style="color: #9CA3AF;
+            font-size: 21px;
+            font-weight: 400;">Here you can find the List of accounts.</p>
         </div>
-    @endif
-    
-    <!-- User Table -->
-    <div class="table-container" style="overflow-x: auto; max-height: 500px;  border-radius: 25px;">
-        <table class="table  " style="background-color: white; border-radius: 25px; ">
-            <thead>
-                <tr>
-                    <th style="color: #2B37A0; text-align: center;">ID</th>
-                    <th style="color: #2B37A0; text-align: center;">Name</th>
-                    <th style="color: #2B37A0; text-align: center;">Email</th>
-                    <th style="color: #2B37A0; text-align: center;">Phone</th>
-                    <th style="color: #2B37A0; text-align: center;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <span>Actions</span>
-                            <a href="{{ route('users.create') }}" class="btn btn-primary" 
-                            style="padding: 5px 10px; font-size: 14px; border-radius: 50px; background-color: #2B37A0; color: white;">
-                                Add Account
-                            </a>
-                        </div>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($users as $user)
-                    <tr>
-                        <td style="text-align: center">{{ $user->id }}</td>
-                        <td style="text-align: center">{{ $user->name }}</td>
-                        <td style="text-align: center">{{ $user->email }}</td>
-                        <td style="text-align: center">{{ $user->phone }}</td>
-                        <td style="text-align: center">
-                            <!-- View button with text -->
-                            <a href="{{ route('users.show', $user->id) }}" class="btn btn-info btn-sm" style="padding: 5px 10px; font-size: 14px; border-radius: 50px; background-color: white; color: #2B37A0; border: 1px solid #2B37A0; transition: background-color 0.3s, color 0.3s;" onmouseover="this.style.backgroundColor='#2B37A0'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#2B37A0';">
-                                View
-                            </a>
-                            <!-- Edit button with text -->
-                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm" style="padding: 5px 10px; font-size: 14px; border-radius: 50px; background-color: white; color: #000000; border: 1px solid #000000; transition: background-color 0.3s, color 0.3s;" onmouseover="this.style.backgroundColor='#2B37A0'; this.style.color='white';" onmouseout="this.style.backgroundColor='white'; this.style.color='#000000';">
-                                Edit
-                            </a>
-                            <!-- Delete button with SweetAlert confirmation -->
-                            <button class="btn btn-danger btn-sm" style ="padding: 5px 10px; font-size: 14px;   background-color:transparent; color: #000000; border: 0px " onclick="confirmDelete({{ $user->id }})">
-                                <i class="fas fa-trash-alt " style="color: #2B37A0; font-size: 25px; transition: color 0.3s;" onmouseover="this.style.color='red';" onmouseout="this.style.color='#2B37A0';"></i>
-                            </button>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
 
-    <!-- Pagination -->
-    <div class="d-flex justify-content-center mt-3">
-        {{ $users->links('pagination::bootstrap-4') }}
+        <!-- User Table -->
+        <div class="table-container" style="overflow-x: auto; 
+                max-height: 500px; 
+                border-radius: 10px; 
+                background-color: white; 
+                border: 0.91px  #E5E7EB; 
+                padding: 10px;
+                border: 1px solid #E5E7EB;">
+            <div class="d-flex justify-content-between align-items-center mb-3"">
+                        <text class=" m-0" 
+                        style="color: #374151;
+                        text-align: center;
+                        font-size: 21px;
+                        font-weight: 600;">Accounts</text>
+                <a href="{{ route('users.create') }}" 
+                class="btn btn-primary" 
+                style="padding: 5px 10px; 
+                        border-radius: 10px; 
+                        background-color: #134DF4; 
+                        color: white;
+                        width: 160px;
+                        height: 40px;
+                        text-align: center;">
+                    <i class="fas fa-plus"></i> Add Account
+                </a>
+            </div>
+            <table class="table custom-table" style="background-color: white; border-collapse: separate; border-spacing: 0;">
+                <thead style="height: 55px; 
+                    background-color: #F2F7FD; 
+                    overflow: hidden; 
+                    border-bottom: none !important;">
+                    <tr style="border-bottom: none !important;">
+                        <th style="color: #9CA3AF; 
+                            background-color: #F2F7FD; 
+                            text-align: center; 
+                            vertical-align: middle; 
+                            border-left: 1px solid #E5E7EB; 
+                            border-top: 1px solid #E5E7EB; 
+                            border-radius: 10px 0 0 10px;">
+                            ID</th>
+                        <th style="color: #9CA3AF; 
+                            background-color: #F2F7FD; 
+                            text-align: center; 
+                            vertical-align: middle; 
+                            border-top: 1px solid #E5E7EB;
+                            ">Name</th>
+                        <th style="color: #9CA3AF; 
+                            background-color: #F2F7FD; 
+                            text-align: center; 
+                            vertical-align: middle; 
+                            border-top: 1px solid #E5E7EB;
+                            ">Email</th>
+                        <th style="
+                            color: #9CA3AF; 
+                            background-color: #F2F7FD; 
+                            text-align: center; 
+                            vertical-align: middle; 
+                            border-top: 1px solid #E5E7EB;
+                            ">Phone</th>
+                        <th style="
+                            color: #9CA3AF; 
+                            background-color: #F2F7FD; 
+                            text-align: center; 
+                            vertical-align: middle; 
+                            border-right: 1px solid #E5E7EB; 
+                            border-top: 1px solid #E5E7EB; 
+                            border-radius: 0 10px 10px 0;
+                            ">Actions</th>
+                    </tr>
+                </thead>
+                <tbody style="height: 55px; 
+                    justify-content: center; 
+                    align-items: center;">
+                    @foreach($users as $user)
+                    <tr style="border-bottom: 0.5px solid #E5E7EB;">
+                            <td style="text-align: center; 
+                                    color: #374151; 
+                                    vertical-align: middle;
+                                    ">{{ $user->id }}</td>
+                            <td style="text-align: center; 
+                                    color: #374151; 
+                                    vertical-align: middle;
+                                    ">{{ $user->name }}</td>
+                            <td style="text-align: center; 
+                                    color: #374151; 
+                                    vertical-align: middle;
+                                    ">{{ $user->email }}</td>
+                            <td style="text-align: center; 
+                                    color: #374151; 
+                                    vertical-align: middle;
+                                    ">{{ $user->phone }}</td>
+                            <td style="text-align: center; vertical-align: middle;">
+                                <!-- Delete button -->
+                                <button class="btn btn-sm" style="background-color: white; border: 1px solid #E5E7EB; color: #374151;"
+                                    onclick="confirmDelete({{ $user->id }})">
+                                    <i class="fas fa-trash-alt" style="color: #6B7280; font-size: 20px; transition: color 0.3s;"
+                                        onmouseover="this.style.color='#374151';" onmouseout="this.style.color='#6B7280';"></i>
+                                </button>
+
+                                <!-- Edit button with pencil icon -->
+                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm"
+                                    style="background-color: white; border: 1px solid #E5E7EB; color: #374151;">
+                                    <i class="fas fa-pencil-alt"
+                                        style="color: #6B7280; font-size: 20px; transition: color 0.3s;"
+                                        onmouseover="this.style.color='#000000';" onmouseout="this.style.color='#6B7280';"></i>
+                                </a>
+
+                                <!-- View button with eye icon -->
+                                <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm"
+                                    style="background-color: white; border: 1px solid #E5E7EB; color: #374151;">
+                                    <i class="fas fa-eye" style="color: #6B7280; font-size: 20px; transition: color 0.3s;"
+                                        onmouseover="this.style.color='#000000';" onmouseout="this.style.color='#6B7280';"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-3">
+            {{ $users->links('pagination::bootstrap-4') }}
+        </div>
     </div>
-</div>
 @endsection
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -70,10 +145,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    // Use $(document).ready to ensure the script runs after the DOM is ready
-    $(document).ready(function() {
-        // Use SweetAlert for the delete confirmation
-        window.confirmDelete = function(userId) {
+    $(document).ready(function () {
+        window.confirmDelete = function (userId) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -84,7 +157,6 @@
                 confirmButtonText: 'Yes, delete it!',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Redirect to the delete route using a form submit
                     var form = $('<form method="POST" action="/users/' + userId + '"></form>');
                     form.append('@csrf');
                     form.append('@method("DELETE")');
@@ -96,10 +168,7 @@
 </script>
 
 <style>
-
-
- /* Improve pagination appearance */
- .pagination {
+    .pagination {
         justify-content: center;
         margin-top: 0px;
     }
@@ -117,5 +186,23 @@
         background-color: #007bff;
         color: white;
     }
-
+/* Custom table styling */
+    .custom-table thead th {
+        border-top: 1px solid #E5E7EB !important;
+    }
+    
+    .custom-table tbody tr {
+        border-bottom: 0.5px solid #E5E7EB;
+    }
+    
+    /* Remove border from first and last rows */
+    .custom-table tbody tr:first-child {
+        border-top: none !important;
+    }
+    
+    /* Fix for potential Bootstrap interference */
+    .custom-table td, .custom-table th {
+        border-top: none !important;
+    }
+    
 </style>
