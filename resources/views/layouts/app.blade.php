@@ -58,6 +58,7 @@
             margin-left: 70px;
             padding-top: 70px;
             transition: margin-left 0.3s ease;
+            height: 100vh;
         }
 
         /* Expanded Sidebar Styles */

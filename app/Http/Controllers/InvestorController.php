@@ -41,6 +41,12 @@ class InvestorController extends Controller
             $query->where($searchField, 'LIKE', "%{$searchValue}%");
         }
 
+        // Sorting
+        if ($request->has('sort')) {
+            $direction = $request->input('direction', 'asc');
+            $query->orderBy($request->input('sort'), $direction);
+        }
+
         // Paginate the results
         $investors = $query->paginate(10);
 

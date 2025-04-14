@@ -8,9 +8,23 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     // Show users with pagination
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(7);
+        $query = User::query();
+
+        // Sorting
+        if ($request->has('sort')) {
+            $direction = $request->input('direction', 'asc');
+            $query->orderBy($request->input('sort'), $direction);
+        }
+    
+        // Searching (if you have existing search logic)
+        if ($request->filled('search_field') && $request->filled('search_value')) {
+            $query->where($request->search_field, 'like', '%' . $request->search_value . '%');
+        }
+    
+        $users = $query->paginate(10);
+    
         return view('users.index', compact('users'));
     }
 
