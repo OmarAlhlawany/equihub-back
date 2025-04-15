@@ -259,6 +259,8 @@
         border-radius: 15px;
         background-color: white;
         box-shadow: none !important;
+        margin-left: 100px;
+        margin-right: 100px;
     }
 
     .card-header {
