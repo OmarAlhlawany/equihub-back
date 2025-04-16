@@ -284,6 +284,14 @@
                                     style="background-color: #FBFDFF; border: 1px solid #E5E7EB; color: #374151;">
                                     <img src="{{ asset('images/eye-view.svg') }}" alt="View" style="color: #6B7280; font-size: 15px; transition: color 0.3s;" onmouseover="this.style.color='#000000';" onmouseout="this.style.color='#6B7280';">
                                 </a>
+                                <!-- API Test button -->
+                                <button class="btn btn-sm api-test" data-startup-id="{{ $startup->id }}"
+                                    style="background-color: #FBFDFF; border: 1px solid #E5E7EB; color: #374151;"
+                                    onclick="console.log('API Test clicked for startup: {{ $startup->id }}'); window.location.href='{{ route('startup.api.test', $startup->id) }}'">
+                                    <i class="fas fa-brain" alt="API Test"
+                                        style="color: #6B7280; font-size: 12px; transition: color 0.3s;"
+                                        onmouseover="this.style.color='#000000';" onmouseout="this.style.color='#6B7280';"></i>
+                                </button>
                     </td>
                         </tr>
                     @empty
