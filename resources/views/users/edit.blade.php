@@ -1,43 +1,112 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h2 class="text-center mb-4">Edit User</h2>
+    <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="border-radius: 10px; margin-top: 20px; background-color: #F9FAFB;">
+                <div class="modal-header border-bottom-0" style="display: block; padding-bottom: 0;">
+                    <h1 class="modal-title" id="editUserModalLabel"
+                        style="margin-right: 10px; margin-bottom: 10px; color: #374151; font-weight: 500; font-size: 22px; line-height: 100%; letter-spacing: -2%;">
+                        Edit User
+                    </h1>
+                </div>
+                <div class="modal-body" style="padding: 0px;">
+                    <form id="editUserForm" method="POST" action="{{ route('users.update', $user->id) }}">
+                        @csrf
+                        @method('PUT')
+                        <div style="border: none; border-radius: 8px; padding: 0px 20px 0px 20px;">
+                            <div class="form-group mb-3">
+                                <label for="name" style="color: #374151; font-weight: 500; font-size: 19.21px;">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}"
+                                    style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 10px; color: #374151;">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="email"
+                                    style="color: #374151; font-weight: 500; font-size: 19.21px;">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}"
+                                    style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 10px; color: #374151;">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="phone"
+                                    style="color: #374151; font-weight: 500; font-size: 19.21px;">Phone</label>
+                                <input type="text" class="form-control" id="phone" name="phone" value="{{ $user->phone }}"
+                                    style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 10px; color: #374151;">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="password"
+                                    style="color: #374151; font-weight: 500; font-size: 19.21px;">Password</label>
+                                <input type="password" class="form-control" id="password" name="password"
+                                    style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 10px; color: #374151;">
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="password_confirmation"
+                                    style="color: #374151; font-weight: 500; font-size: 19.21px;">
+                                    Confirm Password
+                                </label>
+                                <input type="password" class="form-control" id="password_confirmation"
+                                    name="password_confirmation"
+                                    style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 10px; color: #374151;">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-top-0" style="display: flex; justify-content: space-between;">
+                    <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal"
+                        style="width: 47%; height: 40.68px; border-radius: 9.63px; border: 0.96px solid #D1D5DB; padding: 13.31px 26.62px 13.98px 26.62px; background-color: #FBFDFF; color: #9CA3AF; font-weight: 600; font-size: 11.98px; line-height: 13.31px; text-align: center; margin-right: 10px;">
+                        Cancel
+                    </button>
+                    <button type="submit" form="editUserForm"
+                        style="width: 48%; height: 40.68px; border-radius: 9.63px; background-color: #134DF4; color: white; font-weight: 600; font-size: 11.98px; line-height: 13.31px; text-align: center; border: none;">
+                        Save edit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Success message -->
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+    @push('scripts')
+        <script>
+            $(document).ready(function () {
+                function closeEditModal() {
+                    const modal = document.getElementById('editUserModal');
+                    if (modal) {
+                        modal.classList.remove('show');
+                        modal.style.display = 'none';
 
-    <form action="{{ route('users.update', $user->id) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}" required>
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" required>
-        </div>
-        <div class="form-group">
-            <label for="phone">Phone</label>
-            <input type="text" class="form-control" id="phone" name="phone" value="{{ $user->phone }}" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
-        </div>
-        <div class="form-group">
-            <label for="password_confirmation">Confirm Password</label>
-            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
-        </div>
+                        const backdrop = document.querySelector('.modal-backdrop');
+                        if (backdrop) {
+                            backdrop.remove();
+                        }
 
-        <button type="submit" class="btn btn-primary">Update User</button>
-    </form>
+                        document.body.classList.remove('modal-open');
+                    }
+                }
 
-    <a href="{{ route('users') }}" class="btn btn-secondary mt-3">Back to Users</a>
-</div>
+                $(document).on('click', '#editUserModal .close-modal', function () {
+                    try {
+                        $('#editUserModal').modal('hide');
+                    } catch (error) {
+                        closeEditModal();
+                    }
+                });
+
+                $(document).on('click', function (event) {
+                    var modal = $('#editUserModal');
+                    if (
+                        modal.is(':visible') &&
+                        !$(event.target).closest('.modal-content').length &&
+                        !$(event.target).is('.modal-content')
+                    ) {
+                        try {
+                            modal.modal('hide');
+                        } catch (error) {
+                            closeEditModal();
+                        }
+                    }
+                });
+            });
+        </script>
+    @endpush
 @endsection
