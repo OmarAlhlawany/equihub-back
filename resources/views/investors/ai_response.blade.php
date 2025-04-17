@@ -2,18 +2,16 @@
 
 @section('content')
     <div class="container py-5">
-        <div class="text-center mb-5 animate-fade-in">
-            <h1 class="display-4 text-gradient">Investment Matches</h1>
-            <p class="lead text-muted">Recommended startups for {{ $investor->name }}</p>
+        <div class="text-center animate-fade-in">
+            <h1 class="display-4 text-gradient" style="color: #374151; font-weight: 500; font-size: 37px;">Investment Matches</h1>
+            <p class="lead text-muted" style="color: #9CA3AF; font-weight: 400; font-size: 21px; text-align: left;">Recommended startups for {{ $investor->name }}</p>
         </div>
 
         <!-- Match Summary Section -->
-        <div class="match-summary mb-5 animate-fade-in">
+        <div class="match-summary  animate-fade-in">
             <div class="summary-grid">
                 <div class="summary-card">
-                    <div class="summary-icon">
-                        <i class="fas fa-percentage"></i>
-                    </div>
+                    
                     <div class="summary-content">
                         <h4>Average Match</h4>
                         <p>{{ $startups->avg('matching_percentage') ? round($startups->avg('matching_percentage')) : 0 }}%
@@ -21,9 +19,7 @@
                     </div>
                 </div>
                 <div class="summary-card">
-                    <div class="summary-icon">
-                        <i class="fas fa-trophy"></i>
-                    </div>
+                    
                     <div class="summary-content">
                         <h4>Best Match</h4>
                         <p>{{ $startups->max('matching_percentage') ? round($startups->max('matching_percentage')) : 0 }}%
@@ -31,9 +27,7 @@
                     </div>
                 </div>
                 <div class="summary-card">
-                    <div class="summary-icon">
-                        <i class="fas fa-building"></i>
-                    </div>
+
                     <div class="summary-content">
                         <h4>Matches Found</h4>
                         <p>{{ $startups->count() }} Startups</p>
@@ -50,115 +44,81 @@
                         <div class="col-md-6 col-lg-4 mb-4 animate-slide-up" style="animation-delay: {{ $loop->iteration * 0.1 }}s">
                             <div class="startup-card">
                                 <!-- Matching Score Circle -->
-                                <div class="matching-percentage" style="--percentage: {{ $startup->matching_percentage }}">
-                                    <svg viewBox="0 0 36 36" class="circular-chart">
-                                        <path
-                                            d="M18 2.0845
-                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831"
-                                            fill="none" stroke="#eee" stroke-width="3" stroke-dasharray="100, 100" />
-                                        <path
-                                            d="M18 2.0845
-                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831"
-                                            fill="none" stroke="#2B37A0" stroke-width="3"
-                                            stroke-dasharray="{{ $startup->matching_percentage }}, 100"
-                                            class="percentage-indicator" />
-                                        <text x="18" y="20.35" class="percentage">{{ $startup->matching_percentage }}%</text>
-                                    </svg>
-                                </div>
+                                <div class="d-flex align-items-center justify-content-between" style="gap: 10px;">
+    {{-- اللوجو على الشمال --}}
+    <div>
+        <img src="{{ asset('images/startup-logo-icon.svg') }}" alt="Matching Percentage Icon"
+             style="width: 52px; height: 52px;">
+    </div>
+
+    {{-- المؤشر على اليمين --}}
+    <div style="text-align: center; margin-top: -8px;"> {{-- خلي المؤشر طالع فوق شوية --}}
+    @php
+        $percentage = $startup->matching_percentage;
+        $totalDashes = 13;
+        $filledDashes = round($totalDashes * $percentage / 100);
+        $dashLength = 2; // طول الشرطة
+        $innerRadius = 5; // بداية الشرطة من المركز
+        $center = 8; // خلي مركز الدايرة فوق شوية
+    @endphp
+
+    <svg viewBox="0 0 17 17" width="22" height="22" class="circular-dash-chart">
+        @for ($i = 0; $i < $totalDashes; $i++)
+            @php
+                $angle = ($i / $totalDashes) * 360 - 90;
+                $angleRad = deg2rad($angle);
+
+                $x1 = $center + $innerRadius * cos($angleRad);
+                $y1 = $center + $innerRadius * sin($angleRad);
+
+                $x2 = $center + ($innerRadius + $dashLength) * cos($angleRad);
+                $y2 = $center + ($innerRadius + $dashLength) * sin($angleRad);
+            @endphp
+            <line x1="{{ $x1 }}" y1="{{ $y1 }}" x2="{{ $x2 }}" y2="{{ $y2 }}"
+                  stroke="{{ $i < $filledDashes ? '#22c55e' : '#E5E7EB' }}"
+                  stroke-width="1.5" stroke-linecap="round" />
+        @endfor
+    </svg>
+
+    {{-- الرقم تحت المؤشر --}}
+    <div style="font-size: 11px; font-weight: bold; color: #374151; margin-top: 1px;">
+        {{ $percentage }}%
+    </div>
+</div>
+
+</div>
 
                                 <!-- Startup Header -->
                                 <div class="startup-card-header">
                                     <h3 class="company-name">{{ $startup->name }}</h3>
+                                    <p class="product-service-description">{{ $startup->product_service_description }}</p>
                                     <div class="badges">
-                                        <span class="badge sector-badge">{{ $startup->sector_name }}</span>
                                         <span class="badge stage-badge">{{ $startup->phase_name }}</span>
+                                        <span class="badge sector-badge">{{ $startup->sector_name }}</span>
                                     </div>
                                 </div>
 
-                                <!-- Startup Body -->
-                                <div class="startup-card-body">
-                                    <!-- Matching Criteria -->
-                                    @if($startup->sector_match_score > 0 || $startup->stage_match_score > 0 || $startup->budget_match_score > 0 || $startup->geographic_match_score > 0)
-                                        <div class="matching-criteria">
-                                            <h4>Matching Criteria</h4>
-                                            <div class="criteria-grid">
-                                                @if($startup->sector_match_score > 0)
-                                                    <div class="criteria-item">
-                                                        <div class="criteria-label">
-                                                            <i class="fas fa-bullseye"></i>
-                                                            <span>Sector Match</span>
-                                                        </div>
-                                                        <div class="progress-bar">
-                                                            <div class="progress" style="width: {{ $startup->sector_match_score }}%"></div>
-                                                        </div>
-                                                        <span class="score">{{ $startup->sector_match_score }}%</span>
-                                                    </div>
-                                                @endif
-
-                                                @if($startup->stage_match_score > 0)
-                                                    <div class="criteria-item">
-                                                        <div class="criteria-label">
-                                                            <i class="fas fa-chart-line"></i>
-                                                            <span>Stage Match</span>
-                                                        </div>
-                                                        <div class="progress-bar">
-                                                            <div class="progress" style="width: {{ $startup->stage_match_score }}%"></div>
-                                                        </div>
-                                                        <span class="score">{{ $startup->stage_match_score }}%</span>
-                                                    </div>
-                                                @endif
-
-                                                @if($startup->budget_match_score > 0)
-                                                    <div class="criteria-item">
-                                                        <div class="criteria-label">
-                                                            <i class="fas fa-money-bill-wave"></i>
-                                                            <span>Budget Match</span>
-                                                        </div>
-                                                        <div class="progress-bar">
-                                                            <div class="progress" style="width: {{ $startup->budget_match_score }}%"></div>
-                                                        </div>
-                                                        <span class="score">{{ $startup->budget_match_score }}%</span>
-                                                    </div>
-                                                @endif
-
-                                                @if($startup->geographic_match_score > 0)
-                                                    <div class="criteria-item">
-                                                        <div class="criteria-label">
-                                                            <i class="fas fa-globe-americas"></i>
-                                                            <span>Geographic Match</span>
-                                                        </div>
-                                                        <div class="progress-bar">
-                                                            <div class="progress" style="width: {{ $startup->geographic_match_score }}%">
-                                                            </div>
-                                                        </div>
-                                                        <span class="score">{{ $startup->geographic_match_score }}%</span>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    @endif
+                                
 
                                     <!-- Company Info -->
                                     <div class="company-info">
                                         <div class="info-grid">
                                             <div class="info-item">
-                                                <i class="fas fa-building"></i>
+                                                <img src="{{ asset('images/startup-building-icon.svg') }}" alt="Company Icon" style="width: 20px; height: 20px;">
                                                 <div>
                                                     <label>Company</label>
                                                     <span>{{ $startup->company }}</span>
                                                 </div>
                                             </div>
                                             <div class="info-item">
-                                                <i class="fas fa-money-bill-wave"></i>
+                                                <img src="{{ asset('images/startup-pin-icon.svg') }}" alt="Funding Icon" style="width: 20px; height: 20px;">
                                                 <div>
                                                     <label>Funding</label>
                                                     <span>{{ $startup->funding_name }}</span>
                                                 </div>
                                             </div>
                                             <div class="info-item">
-                                                <i class="fas fa-map-marker-alt"></i>
+                                                <img src="{{ asset('images/startup-dollar-icon.svg') }}" alt="Market Icon" style="width: 20px; height: 20px;">
                                                 <div>
                                                     <label>Market</label>
                                                     <span>{{ $startup->market_name }}</span>
@@ -168,34 +128,37 @@
                                     </div>
 
                                     <!-- Business Metrics -->
-                                    <div class="business-metrics">
-                                        <div class="metric">
-                                            <div class="metric-icon growth">
-                                                <i class="fas fa-chart-line"></i>
-                                            </div>
-                                            <div class="metric-details">
-                                                <span class="metric-value">{{ number_format($startup->revenue_growth, 1) }}%</span>
-                                                <span class="metric-label">Revenue Growth</span>
-                                            </div>
-                                        </div>
-                                        <div class="metric">
-                                            <div class="metric-icon {{ $startup->is_profitable ? 'profit' : 'no-profit' }}">
-                                                <i class="fas {{ $startup->is_profitable ? 'fa-check' : 'fa-times' }}"></i>
-                                            </div>
-                                            <div class="metric-details">
-                                                <span class="metric-value">{{ $startup->is_profitable ? 'Yes' : 'No' }}</span>
-                                                <span class="metric-label">Profitable</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center" style="gap: 20px; margin-bottom: 1rem;">
+    
+    <div class="d-flex flex-column align-items-center">
+        <div class="d-flex align-items-center" style="gap: 5px;">
+            <img src="{{ asset('images/startup-arrowup-icon.svg') }}" alt="Growth Icon" style="width: 16px; height: 16px;">
+            <span class="metric-value" style="font-weight: bold;">{{ number_format($startup->revenue_growth, 1) }}%</span>
+        </div>
+        <span class="metric-label" style="font-size: 12px; color: #6B7280;">Revenue Growth</span>
+    </div>
+
+    <div class="text-center">
+        <img src="{{ asset('images/startup-incentive-icon.svg') }}" alt="Incentive Icon" style="width: 50px; height: 50px;">
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+        <div style="font-weight: bold;">
+            {{ $startup->is_profitable ? 'Yes' : 'No' }}
+        </div>
+        <span class="metric-label" style="font-size: 12px; color: #6B7280;">Profitable</span>
+    </div>
+
+</div>
+
 
                                     <!-- Action Buttons -->
                                     <div class="card-actions">
-                                        <button class=view-details-btn
+                                        <button class="view-details-btn action-button"
                                             onclick="window.location.href='{{ route('startups.show', $startup->id) }}'"
-                                            class="action-button secondary">
-                                            <i class="fas fa-info-circle"></i>
-                                            View Details
+                                            >
+                                            <img src="{{ asset('images/startup-details-icon.svg') }}" alt="Info Icon" style="width: 20px; height: 20px; margin-right: 10px;">
+                                            Details
                                         </button>
 
                                     </div>
@@ -213,29 +176,47 @@
                     </div>
                 </div>
             @endif
+            <!-- Navigation -->
+<div class="text-center animate-fade-in" style="animation-delay: 0.5s; display: flex; justify-content: center; margin-top: 3rem;">
+    <div style="display: flex; border: 1px solid #E5E7EB; border-radius: 10px; overflow: hidden; background-color: white; width: 550px; height: 50px;">
+
+        {{-- English PDF --}}
+        <a href="{{ route('investors.pdf.ai_response.en', ['investor' => $investor->id]) }}"
+           style="display: flex; align-items: center; justify-content: center; width: 50%; color: #1F2937; font-size: 15px; font-weight: 500; height: 100%; text-decoration: none;">
+            <img src="{{ asset('images/startup-pdf-icon.svg') }}" alt="PDF Icon" style="width: 20px; height: 20px; margin-right: 20px;">
+            Download English PDF
+            <img src="{{ asset('images/startup-download-icon.svg') }}" alt="Download Icon" style="width: 20px; height: 20px; margin-left: 20px;">
+        </a>
+
+        {{-- Divider --}}
+        <div style="width: 1px; background-color: #E5E7EB; height: 60%; align-self: center;"></div>
+
+        {{-- Arabic PDF --}}
+        <a href="{{ route('investors.pdf.ai_response.ar', ['investor' => $investor->id]) }}"
+           style="display: flex; align-items: center; justify-content: center; width: 50%; color: #1F2937; font-size: 15px; font-weight: 500; height: 100%; text-decoration: none;">
+            <img src="{{ asset('images/startup-pdf-icon.svg') }}" alt="PDF Icon" style="width: 20px; height: 20px; margin-right: 20px;">
+            تحميل PDF بالعربية
+            <img src="{{ asset('images/startup-download-icon.svg') }}" alt="Download Icon" style="width: 20px; height: 20px; margin-left: 20px;">
+        </a>
+
+    </div>
+</div>
+
+</div>
+
         </div>
 
-        <!-- Navigation -->
-        <div class="text-center mt-5 animate-fade-in" style="animation-delay: 0.5s">
-            <a href="{{ route('investors.pdf.ai_response.en', ['investor' => $investor->id]) }}" class="btn btn-primary">
-                <i class="fas fa-file-pdf"></i> Download English PDF
-            </a>
-            <a href="{{ route('investors.pdf.ai_response.ar', ['investor' => $investor->id]) }}" class="btn btn-secondary">
-                <i class="fas fa-file-pdf"></i> تحميل PDF بالعربية
-            </a>
-            <a href="{{ route('investor.api.test', $investor->id) }}" class="back-button">
-                <i class="fas fa-arrow-left mr-2"></i> Back to Investor Overview
-            </a>
-        </div>
+      
+
     </div>
 
     <style>
         /* Modern, Professional Styling */
         .text-gradient {
-            background: linear-gradient(120deg, #2B37A0, #4e47d1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 700;
+            color: #374151; 
+            font-weight: 500; 
+            font-size: 37px;
+            text-align: left;
         }
 
         .matched-startups {
@@ -260,22 +241,30 @@
         }
 
         .startup-card-header {
-            padding: 1.5rem;
-            background: linear-gradient(120deg, #f8f9fa, #ffffff);
+            padding: 1.5rem 1.5rem 0.5rem 0rem;
             border-bottom: 1px solid #eef0f2;
+            margin-bottom: 1rem;
         }
 
         .company-name {
-            font-size: 1.4rem;
-            color: #2B37A0;
+            font-size: 21px;
+            color: #374151;
             margin-bottom: 0.5rem;
             font-weight: 600;
+        }
+
+        .product-service-description {
+            font-size: 14.5px;
+            color: #6B7280;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
         }
 
         .badges {
             display: flex;
             gap: 0.5rem;
             margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
         }
 
         .badge {
@@ -286,19 +275,24 @@
         }
 
         .sector-badge {
-            background: #e8efff;
-            color: var(--primary-color);
+            background: #EFF6FF !important;
+            color: #6B7280 !important;
         }
 
         .stage-badge {
-            background: #fff3e0;
-            color: var(--warning-color);
+            background: #EFF6FF !important;
+            color: #6B7280 !important;
         }
 
         .startup-card-body {
             padding: 1.5rem;
         }
 
+        .company-info {
+            margin-top: 1rem;
+            border-bottom: 1px solid #eef0f2;
+            margin-bottom: 1rem;
+        }
         .info-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -312,23 +306,23 @@
             gap: 0.75rem;
         }
 
-        .info-item i {
-            color: #2B37A0;
+        .info-item img {
             font-size: 1.2rem;
             margin-top: 0.2rem;
         }
 
         .info-item label {
             display: block;
-            font-size: 0.85rem;
+            font-size: 10px;
             color: #6c757d;
             margin-bottom: 0.2rem;
+            font-weight: 400;
         }
 
         .info-item span {
-            color: #2d3748;
-            font-weight: 500;
-            font-size: 1rem;
+            color: #374151;
+            font-weight: 400;
+            font-size: 17px;
         }
 
         .startup-metrics {
@@ -362,7 +356,7 @@
             justify-content: center;
             width: 100%;
             padding: 0.75rem 1.5rem;
-            background: linear-gradient(120deg, #2B37A0, #4e47d1);
+            background: #134DF4 ;
             color: white;
             border-radius: 12px;
             text-decoration: none;
@@ -370,11 +364,7 @@
             transition: all 0.3s ease;
         }
 
-        .view-details-btn:hover {
-            background: linear-gradient(120deg, #4e47d1, #2B37A0);
-            color: white;
-            transform: translateY(-2px);
-        }
+        
 
         .view-details-btn i {
             margin-left: 0.5rem;
@@ -507,16 +497,15 @@
         .summary-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
+            gap: .5rem;
             margin-bottom: 2rem;
         }
 
         .summary-card {
             background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
+            border-radius: 7px;
+            padding: 1rem 0rem 1rem 1rem;
             display: flex;
-            align-items: center;
             gap: 1rem;
             box-shadow: var(--card-shadow);
             transition: var(--transition);
@@ -540,15 +529,16 @@
         }
 
         .summary-content h4 {
-            font-size: 0.9rem;
-            color: var(--secondary-color);
+            font-size: 19px !important;
+            font-weight: 500 !important;
+            color: #4B5563 !important;
             margin: 0;
         }
 
         .summary-content p {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--primary-color);
+            font-size: 19px !important;
+            font-weight: 500 !important;
+            color: #374151 !important;
             margin: 0;
         }
 
@@ -678,7 +668,7 @@
             font-weight: 500;
             transition: var(--transition);
             text-decoration: none;
-            border: none;
+            border: none !important;
             cursor: pointer;
         }
 
