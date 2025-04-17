@@ -2,12 +2,37 @@
 
 @section('content')
     <div class="container">
-        <div class="row mb-4">
-            <div class="col">
-                <h2 style="color: #374151; font-weight: 500; font-size: 37px;">Investment Matches</h2>
-                <p style="color: #9CA3AF; font-weight: 400; font-size: 21px;">Recommended startups for  {{ $investor->name }}</p>
-            </div>
+    <div class="row mb-4 align-items-center">
+    <!-- العنوان والوصف -->
+    <div class="col">
+        <h2 style="color: #374151; font-weight: 500; font-size: 37px;">Investment Matches</h2>
+        <p style="color: #9CA3AF; font-weight: 400; font-size: 21px;">Recommended startups for  {{ $investor->name }}</p>
+    </div>
+
+    <!-- زر تحميل PDF -->
+    <div class="col-auto text-end">
+        <div class="dropdown">
+            <button class="btn btn-secondary " type="button" id="languageDropdown"
+                data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 10px; border: 1px solid #E5E7EB; background-color: white; color: #6B7280; font-size: 15px; font-weight: 500; height: 40px;">
+                <img src="{{ asset('images/startup-pdf-icon.svg') }}" alt="PDF Icon" style="width: 20px; height: 20px; margin-right: 5px;"> Download PDF Report<img src="{{ asset('images/startup-download-icon.svg') }}" alt="Download Icon" style="width: 15px; height: 15px; margin-left: 5px;">
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                <li>
+                    <a class="dropdown-item"
+                        href="{{ route('investors.pdf.ai_response.ar', ['investor' => $investor->id]) }}">
+                        <img src="{{ asset('images/startup-download-icon.svg') }}" alt="Download Icon" style="width: 15px; height: 15px; margin-right: 5px;"> Arabic PDF
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item"
+                        href="{{ route('investors.pdf.ai_response.en', ['investor' => $investor->id]) }}">
+                        <img src="{{ asset('images/startup-download-icon.svg') }}" alt="Download Icon" style="width: 15px; height: 15px; margin-right: 5px;"> English PDF
+                    </a>
+                </li>
+            </ul>
         </div>
+    </div>
+</div>
 
         <div class="row">
             <!-- Investor Profile Card -->
