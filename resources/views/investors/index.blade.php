@@ -12,7 +12,7 @@
                                             font-weight: 400;">Here you can find the List of investors.</p>
             </div>
 
-            <!-- Search Form -->
+    <!-- Search Form -->
             <form action="{{ route('investors') }}" method="GET" class="d-flex align-items-center"
                 style="gap: 10px; max-width: 600px;">
                 <div style="position: relative; width: 180px;">
@@ -30,12 +30,12 @@
             -moz-appearance: none;
             padding-right: 36px;">
                         <option value="" selected disabled hidden>Search with</option>
-                        <option value="name" {{ request('search_field') == 'name' ? 'selected' : '' }}>Name</option>
-                        <option value="email" {{ request('search_field') == 'email' ? 'selected' : '' }}>Email</option>
+                <option value="name" {{ request('search_field') == 'name' ? 'selected' : '' }}>Name</option>
+                <option value="email" {{ request('search_field') == 'email' ? 'selected' : '' }}>Email</option>
                         <option value="phone_number" {{ request('search_field') == 'phone_number' ? 'selected' : '' }}>Phone
                         </option>
-                        <option value="company" {{ request('search_field') == 'company' ? 'selected' : '' }}>Company</option>
-                    </select>
+                <option value="company" {{ request('search_field') == 'company' ? 'selected' : '' }}>Company</option>
+            </select>
 
                     <i class="fas fa-chevron-down" style="
             position: absolute;
@@ -78,14 +78,14 @@
                                             align-items: center;
                                             gap: 8px;
                                             transition: background-color 0.3s, color 0.3s;"
-                    onmouseover="this.style.backgroundColor='#2B37A0'; this.style.color='white';"
-                    onmouseout="this.style.backgroundColor='white'; this.style.color='#2B37A0';">
+            onmouseover="this.style.backgroundColor='#2B37A0'; this.style.color='white';"
+            onmouseout="this.style.backgroundColor='white'; this.style.color='#2B37A0';">
                     <i class="fas fa-sync-alt"></i>
-                </button>
+            </button>
 
 
-            </form>
-        </div>
+        </form>
+    </div>
 
         <!-- Investors Table -->
         <div class="table-container" style="overflow-x: auto; 
@@ -109,7 +109,7 @@
                                                     margin-top: 10px;">
                     <i class="fas fa-plus"></i> Add Investor
                 </a>
-            </div>
+    </div>
             <table class="table custom-table"
                 style="background-color: white; border-collapse: separate; border-spacing: 0;">
                 <thead style="height: 55px; 
@@ -224,10 +224,10 @@
                                         @endif
                                     @else
                                         <i class="fas fa-sort" style="color: #9CA3AF;"></i>
-                                    @endif
+    @endif
                                 </span>
                             </a>
-                        </th>
+                    </th>
                         <th style="
                                                         color: #9CA3AF; 
                                                         background-color: #F2F7FD; 
@@ -237,12 +237,12 @@
                                                         border-top: 1px solid #E5E7EB; 
                                                         border-radius: 0 10px 10px 0;
                                                         ">Actions</th>
-                    </tr>
-                </thead>
+                </tr>
+            </thead>
                 <tbody style="height: 55px; 
                                                 justify-content: center; 
                                                 align-items: center;">
-                    @foreach($investors as $investor)
+                @foreach($investors as $investor)
                         <tr style="border-bottom: 0.5px solid #E5E7EB;">
                             <td style="text-align: center; 
                                                                                             color: #374151; 
@@ -299,15 +299,15 @@
                                     <i class="fas fa-brain" alt="API Test"
                                         style="color: #6B7280; font-size: 12px; transition: color 0.3s;"
                                         onmouseover="this.style.color='#000000';" onmouseout="this.style.color='#6B7280';"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                            </button>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
-        <!-- Pagination -->
+    <!-- Pagination -->
         <div class="d-flex justify-content-center mt-3">
             {{ $investors->appends(request()->input())->links('pagination::bootstrap-4') }}
         </div>
@@ -321,22 +321,22 @@
 <script>
     $(document).ready(function () {
         window.confirmDelete = function (investorId) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    var form = $('<form method="POST" action="/investors/' + investorId + '"></form>');
-                    form.append('@csrf');
-                    form.append('@method("DELETE")');
-                    form.appendTo('body').submit();
-                }
-            });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var form = $('<form method="POST" action="/investors/' + investorId + '"></form>');
+                form.append('@csrf');
+                form.append('@method("DELETE")');
+                form.appendTo('body').submit();
+            }
+        });
         };
 
         window.resetSearch = function () {

@@ -30,12 +30,12 @@
             -moz-appearance: none;
             padding-right: 36px;">
                         <option value="" selected disabled hidden>Search with</option>
-                        <option value="name" {{ request('search_field') == 'name' ? 'selected' : '' }}>Name</option>
-                        <option value="email" {{ request('search_field') == 'email' ? 'selected' : '' }}>Email</option>
+            <option value="name" {{ request('search_field') == 'name' ? 'selected' : '' }}>Name</option>
+            <option value="email" {{ request('search_field') == 'email' ? 'selected' : '' }}>Email</option>
                         <option value="phone_number" {{ request('search_field') == 'phone_number' ? 'selected' : '' }}>Phone
                         </option>
-                        <option value="company" {{ request('search_field') == 'company' ? 'selected' : '' }}>Company</option>
-                    </select>
+            <option value="company" {{ request('search_field') == 'company' ? 'selected' : '' }}>Company</option>
+            </select>
 
                     <i class="fas fa-chevron-down" style="
             position: absolute;
@@ -47,7 +47,7 @@
                 </div>
 
 
-                <input type="text" name="search_value" id="searchInput" class="form-control" placeholder="Search here..."
+            <input type="text" name="search_value" id="searchInput" class="form-control" placeholder="Search here..."
                     value="{{ request('search_value') }}" style="
                                             width: 250px; 
                                             padding: 8px 12px;
@@ -78,14 +78,14 @@
                                             align-items: center;
                                             gap: 8px;
                                             transition: background-color 0.3s, color 0.3s;"
-                    onmouseover="this.style.backgroundColor='#2B37A0'; this.style.color='white';"
-                    onmouseout="this.style.backgroundColor='white'; this.style.color='#2B37A0';">
+            onmouseover="this.style.backgroundColor='#2B37A0'; this.style.color='white';"
+            onmouseout="this.style.backgroundColor='white'; this.style.color='#2B37A0';">
                     <i class="fas fa-sync-alt"></i>
-                </button>
+            </button>
 
 
-            </form>
-        </div>
+        </form>
+    </div>
 
         <!-- Startups Table -->
         <div class="table-container" style="overflow-x: auto; 
@@ -109,7 +109,7 @@
                                                     margin-top: 10px;">
                     <i class="fas fa-plus"></i> Add Startup
                 </a>
-            </div>
+        </div>
             <table class="table custom-table"
                 style="background-color: white; border-collapse: separate; border-spacing: 0;">
                 <thead style="height: 55px; 
@@ -180,10 +180,10 @@
                                         @endif
                                     @else
                                         <i class="fas fa-sort" style="color: #9CA3AF;"></i>
-                                    @endif
+    @endif
                                 </span>
                             </a>
-                        </th>
+                    </th>
                         <th style="color: #9CA3AF; 
                                                         background-color: #F2F7FD; 
                                                         text-align: center; 
@@ -271,7 +271,7 @@
                                     style="background-color: #FBFDFF; border: 1px solid #E5E7EB; color: #374151;"
                                     onclick="confirmDelete({{ $startup->id }})">
                                     <img src="{{ asset('images/trash-delete.svg') }}" alt="Delete" style="color: #6B7280; font-size: 15px; transition: color 0.3s;" onmouseover="this.style.color='#374151';" onmouseout="this.style.color='#6B7280';">
-                                </button>
+                            </button>
 
                                 <!-- Edit button with pencil icon -->
                                 <a href="{{ route('startups.edit', $startup->id) }}" class="btn btn-sm"
@@ -292,22 +292,22 @@
                                         style="color: #6B7280; font-size: 12px; transition: color 0.3s;"
                                         onmouseover="this.style.color='#000000';" onmouseout="this.style.color='#6B7280';"></i>
                                 </button>
-                    </td>
-                        </tr>
+                        </td>
+                    </tr>
                     @empty
                         <tr>
                             <td colspan="6" class="text-center py-4" style="color: #9CA3AF;">No startups found.</td>
                         </tr>
                     @endforelse
-                </tbody>
-            </table>
+            </tbody>
+        </table>
         </div>
     </div>
 
     <!-- Pagination -->
     <div class="d-flex justify-content-center mt-3">
         {{ $startups->appends(request()->input())->links('pagination::bootstrap-4') }}
-    </div>
+</div>
 
     <script>
         function resetSearch() {
@@ -353,18 +353,18 @@
 
 <style>
     .pagination {
-        justify-content: center;
-        margin-top: 0px;
-    }
-
+            justify-content: center;
+            margin-top: 0px;
+        }      
+    
     .pagination .page-item {
         margin: 0 5px;
-    }
+        }
 
     .pagination .page-link {
         padding: 8px 16px;
         border-radius: 4px;
-    }
+        }
 
     .pagination .page-link:hover {
         background-color: #007bff;

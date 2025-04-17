@@ -1,99 +1,93 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container py-5">
-        <div class="text-center mb-5 animate-fade-in">
-            <h1 class="display-4 text-gradient">AI Investment Matching</h1>
-            <p class="lead text-muted">Advanced Analysis for {{ $investor->name }}</p>
-        </div>
-
-        <!-- Language Selection Dropdown -->
-        <div class="row mb-3">
-            <div class="col-12 text-right">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdown"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-file-pdf"></i> Download PDF Report
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-                        <li>
-                            <a class="dropdown-item"
-                                href="{{ route('investors.pdf.ai_response.ar', ['investor' => $investor->id]) }}">
-                                <i class="fas fa-language"></i> Arabic PDF
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item"
-                                href="{{ route('investors.pdf.ai_response.en', ['investor' => $investor->id]) }}">
-                                <i class="fas fa-language"></i> English PDF
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col">
+                <h2 style="color: #374151; font-weight: 500; font-size: 37px;">Investment Matches</h2>
+                <p style="color: #9CA3AF; font-weight: 400; font-size: 21px;">Recommended startups for  {{ $investor->name }}</p>
             </div>
         </div>
 
         <div class="row">
             <!-- Investor Profile Card -->
             <div class="col-lg-4 mb-4">
-                <div class="profile-card animate-slide-up">
-                    <div class="profile-header">
+                <div class="profile-card animate-slide-up" style="background-color: white;">
+                    <div class="profile-header" style="background-color: white;">
                         <div class="profile-avatar">
-                            <i class="fas fa-user-tie"></i>
+                            <img src="{{ asset('images/startup-avatar-icon.svg') }}" alt="User Icon">
                         </div>
-                        <h3>{{ $investor->name }}</h3>
-                        <p>{{ $investor->company }}</p>
+                        <h3 style="color: #374151; font-weight: 600; font-size: 21px;">{{ $investor->name }}</h3>
+                        <p style="color: #9CA3AF; font-weight: 400; font-size: 15px;">{{ $investor->company }}</p>
                     </div>
 
-                    <div class="profile-stats">
-                        <div class="stat-item">
-                            <div class="stat-value">{{ $investor->favouriteSectors->count() }}</div>
-                            <div class="stat-label">Preferred Sectors</div>
+                    <hr style="border-top: 1px solid #E5E7EB; width: 300px; height: 1px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); justify-self: center;">
+
+                    <div class="profile-stats d-flex justify-content-between">
+                        <div class="stat-item text-center">
+                            <div class="stat-value" style="color: #1E3A8A; font-weight: 400; font-size: 20px;">{{ $investor->favouriteSectors->count() }}</div>
+                            <div class="stat-label" style="color: #9CA3AF;">Preferred Sectors</div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-value">{{ optional($investor->budgetRange)->name }}</div>
-                            <div class="stat-label">Investment Range</div>
+                        <div class="stat-item text-center">
+                            <div class="stat-value" style="color: #1E3A8A; font-weight: 400; font-size: 20px;">{{ optional($investor->budgetRange)->name }}
+                            </div>
+                            <div class="stat-label" style="color: #9CA3AF;">Investment Range</div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-value">{{ optional($investor->geographicalScope)->name }}</div>
-                            <div class="stat-label">Geographic Focus</div>
+                        <div class="stat-item text-center">
+                            <div class="stat-value" style="color: #1E3A8A; font-weight: 400; font-size: 20px;">
+                                {{ optional($investor->geographicalScope)->name }}</div>
+                            <div class="stat-label" style="color: #9CA3AF;">Geographic Focus</div>
                         </div>
                     </div>
+
+                    <hr style="border-top: 1px solid #E5E7EB; width: 300px; height: 1px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); justify-self: center;">
 
                     <div class="profile-body">
                         <div class="profile-section">
-                            <h4>Investment Preferences</h4>
+                            <h4 style="color: #374151; font-weight: 500; font-size: 18px;">Investment Preferences</h4>
                             <div class="preference-grid">
                                 <div class="preference-item">
-                                    <i class="fas fa-chart-line"></i>
+                                    <div class="icon-wrapper me-3">
+                                        <img src="{{ asset('images/startup-stats-icon.svg') }}" alt="Investment Type"
+                                            class="preference-icon">
+                                    </div>
                                     <div>
-                                        <label>Stage</label>
-                                        <span>{{ optional($investor->favouriteInvestmentStage)->name }}</span>
+                                        <label style="color: #9CA3AF; font-weight: 400; font-size: 15px;">Stage</label>
+                                        <div style="color: #374151; font-weight: 400; font-size: 20px;">
+                                            {{ optional($investor->favouriteInvestmentStage)->name }}</div>
                                     </div>
                                 </div>
                                 <div class="preference-item">
-                                    <i class="fas fa-handshake"></i>
+                                    <div class="icon-wrapper me-3">
+                                        <img src="{{ asset('images/startup-coinvest-icon.svg') }}" alt="Co-Investment"
+                                            class="preference-icon">
+                                    </div>
                                     <div>
-                                        <label>Co-Investment</label>
-                                        <span>{{ optional($investor->coInvest)->name }}</span>
+                                        <label style="color: #9CA3AF; font-weight: 400; font-size: 15px;">Co-Investment</label>
+                                        <div style="color: #374151; font-weight: 400; font-size: 20px;">{{ optional($investor->coInvest)->name }}</div>
                                     </div>
                                 </div>
                                 <div class="preference-item">
-                                    <i class="fas fa-shield-alt"></i>
+                                    <div class="icon-wrapper me-3">
+                                        <img src="{{ asset('images/startup-privacy-icon.svg') }}" alt="Privacy"
+                                            class="preference-icon">
+                                    </div>
                                     <div>
-                                        <label>Privacy</label>
-                                        <span>{{ optional($investor->investmentPrivacyOption)->name }}</span>
+                                        <label style="color: #9CA3AF; font-weight: 400; font-size: 15px;">Privacy</label>
+                                        <div style="color: #374151; font-weight: 400; font-size: 20px;">
+                                            {{ optional($investor->investmentPrivacyOption)->name }}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        <hr style="border-top: 1px solid #E5E7EB; width: 300px; height: 1px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); justify-self: center;">
+
                         <div class="profile-section">
-                            <h4>Focus Sectors</h4>
-                            <div class="sectors-grid">
+                            <h4 style="color: #374151; font-weight: 500; font-size: 18px;">Focus Sectors</h4>
+                            <div class="sectors-grid" >
                                 @foreach($investor->favouriteSectors as $sector)
-                                    <span class="sector-badge">
-                                        <i class="fas fa-check-circle"></i>
+                                    <span class="sector-badge" style="border-radius: 30px; font-size: 15px; font-weight: 400; color: #4B5563;">
                                         {{ $sector->name }}
                                     </span>
                                 @endforeach
@@ -120,14 +114,17 @@
                         @if(!$aiResponse)
                             <div class="analysis-empty-state">
                                 <div class="empty-state-icon">
-                                    <i class="fas fa-brain"></i>
+                                    <img src="{{ asset('images/startup-search-icon.svg') }}" alt="User Icon">
                                 </div>
-                                <h4>Ready for Analysis</h4>
-                                <p>Start the AI matching process to find compatible startups</p>
+                                <div class="empty-state-icon">
+                                    <img src="{{ asset('images/startup-search2-icon.svg') }}" alt="User Icon">
+                                </div>
+                                <h4 style="color: #374151; font-weight: 600; font-size: 19px;">Vision & Mission</h4>
+                                <p style="color: #9CA3AF; font-weight: 400; font-size: 12px;">Start the AI matching process to find compatible startups</p>
                                 <form action="{{ route('investor.api.test.send', $investor->id) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="action-button">
-                                        <i class="fas fa-play-circle"></i>
+                                        <img src="{{ asset('images/startup-star-icon.svg') }}" alt="User Icon">
                                         Begin Analysis
                                     </button>
                                 </form>
@@ -220,8 +217,6 @@
         /* Profile Header */
         .profile-header {
             padding: 2rem;
-            background: linear-gradient(120deg, var(--primary-color), var(--primary-light));
-            color: white;
             text-align: center;
         }
 
@@ -249,7 +244,7 @@
             background: white;
             margin-top: -1rem;
             border-radius: 20px 20px 0 0;
-            box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.1);
+            
         }
 
         .stat-item {
@@ -292,15 +287,16 @@
         .preference-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 0.75rem;
-            background: var(--background-color);
-            border-radius: 12px;
+            margin-bottom: 15px;
         }
 
-        .preference-item i {
-            color: var(--primary-color);
-            font-size: 1.2rem;
+        .preference-item .icon-wrapper {
+            margin-right: 10px;
+        }
+
+        .preference-item .preference-icon {
+            width: 24px;
+            height: 24px;
         }
 
         .preference-item label {
@@ -309,7 +305,7 @@
             margin: 0;
         }
 
-        .preference-item span {
+        .preference-item div {
             font-weight: 500;
             color: #2d3748;
         }
@@ -323,13 +319,9 @@
 
         .sector-badge {
             background: #e8efff;
-            color: var(--primary-color);
+            color: #374151;
             padding: 0.4rem 0.8rem;
-            border-radius: 50px;
             font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
         }
 
         /* Analysis Card */

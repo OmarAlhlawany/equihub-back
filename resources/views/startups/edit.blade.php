@@ -1,46 +1,46 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+    <div class="container">
     <h2 class="text-center mb-4"
         style="color: #374151; font-weight: bold; font-size: 30px; text-align: left !important;">Edit Startup</h2>
 
-    <form action="{{ route('startups.update', $startup->id) }}" method="POST">
-        @csrf
-        @method('PUT')
+        <form action="{{ route('startups.update', $startup->id) }}" method="POST">
+            @csrf
+            @method('PUT')
 
-        <div class="card"
-            style="background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <div class="card"
+                style="background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
             <!-- Startup Information Section -->
             <div class="section-title mb-3">
                 <h4 style="color: #134DF4;">Startup Information</h4>
                 <hr>
             </div>
 
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label for="name">Startup Name <span class="text-danger">*</span></label>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="name">Startup Name <span class="text-danger">*</span></label>
                     <input type="text" class="form-control input-focus @error('name') is-invalid @enderror" id="name"
                         name="name" value="{{ old('name', $startup->name) }}" required>
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
+                    </div>
 
-                <div class="col-md-4 mb-3">
-                    <label for="email">Email <span class="text-danger">*</span></label>
+                    <div class="col-md-4 mb-3">
+                        <label for="email">Email <span class="text-danger">*</span></label>
                     <input type="email" class="form-control input-focus @error('email') is-invalid @enderror" id="email"
-                        name="email" value="{{ old('email', $startup->email) }}" required>
+                            name="email" value="{{ old('email', $startup->email) }}" required>
                     @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
+                    </div>
 
-                <div class="col-md-4 mb-3">
-                    <label for="phone_number">Phone <span class="text-danger">*</span></label>
+                    <div class="col-md-4 mb-3">
+                        <label for="phone_number">Phone <span class="text-danger">*</span></label>
                     <input type="text" class="form-control input-focus @error('phone_number') is-invalid @enderror"
-                        id="phone_number" name="phone_number" value="{{ old('phone_number', $startup->phone_number) }}"
-                        required>
+                            id="phone_number" name="phone_number" value="{{ old('phone_number', $startup->phone_number) }}"
+                            required>
                     @error('phone_number')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -51,20 +51,20 @@
             <div class="section-title mb-3 mt-4">
                 <h4 style="color: #134DF4;">Company Details</h4>
                 <hr>
-            </div>
+                </div>
 
-            <div class="row">
+                <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="company">Company <span class="text-danger">*</span></label>
+                        <label for="company">Company <span class="text-danger">*</span></label>
                     <input type="text" class="form-control input-focus @error('company') is-invalid @enderror"
                         id="company" name="company" value="{{ old('company', $startup->company) }}" required>
                     @error('company')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
+                    </div>
 
                 <div class="col-md-6 mb-3">
-                    <label for="website">Website <span class="text-danger">*</span></label>
+                        <label for="website">Website <span class="text-danger">*</span></label>
                     <input type="url" class="form-control input-focus @error('website') is-invalid @enderror"
                         id="website" name="website" value="{{ old('website', $startup->website) }}" required>
                     @error('website')
@@ -77,11 +77,11 @@
             <div class="section-title mb-3 mt-4">
                 <h4 style="color: #134DF4;">Startup Characteristics</h4>
                 <hr>
-            </div>
+                </div>
 
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label for="company_sector_id">Company Sector <span class="text-danger">*</span></label>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="company_sector_id">Company Sector <span class="text-danger">*</span></label>
                     <div class="custom-select-wrapper">
                         <select class="form-control input-focus @error('company_sector_id') is-invalid @enderror"
                             id="company_sector_id" name="company_sector_id" required>
@@ -97,10 +97,10 @@
                     @error('company_sector_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
+                    </div>
 
-                <div class="col-md-4 mb-3">
-                    <label for="operational_phase_id">Operational Phase <span class="text-danger">*</span></label>
+                    <div class="col-md-4 mb-3">
+                        <label for="operational_phase_id">Operational Phase <span class="text-danger">*</span></label>
                     <div class="custom-select-wrapper">
                         <select class="form-control input-focus @error('operational_phase_id') is-invalid @enderror"
                             id="operational_phase_id" name="operational_phase_id" required>
@@ -118,8 +118,8 @@
                     @enderror
                 </div>
 
-                <div class="col-md-4 mb-3">
-                    <label for="funding_amount_id">Funding Amount <span class="text-danger">*</span></label>
+                    <div class="col-md-4 mb-3">
+                        <label for="funding_amount_id">Funding Amount <span class="text-danger">*</span></label>
                     <div class="custom-select-wrapper">
                         <select class="form-control input-focus @error('funding_amount_id') is-invalid @enderror"
                             id="funding_amount_id" name="funding_amount_id" required>
@@ -136,15 +136,15 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-            </div>
+                    </div>
 
             <!-- Additional Information Section -->
             <div class="section-title mb-3 mt-4">
                 <h4 style="color: #134DF4;">Additional Information</h4>
                 <hr>
-            </div>
+                </div>
 
-            <div class="row">
+                <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="problem_solved">Problem Solved <span class="text-danger">*</span></label>
                     <textarea
@@ -166,11 +166,11 @@
                     @error('product_service_description')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
+                    </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-12 mb-3">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
                     <label for="funding_used">Funding Used <span class="text-danger">*</span></label>
                     <textarea
                         class="form-control input-focus @error('funding_used') is-invalid @enderror custom-textarea-corner"
@@ -180,9 +180,9 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-            </div>
+                </div>
 
-            <div class="row">
+                <div class="row">
                 <div class="col-12" style="display: flex; justify-content: flex-end !important;">
                     <a href="{{ route('startups') }}" class="btn btn-secondary"
                         style="width: 200px; height: 40.68px; border-radius: 9.63px; border: 0.96px solid #D1D5DB; padding: 13.31px 26.62px 13.98px 26.62px; background-color: #FBFDFF; color: #9CA3AF; font-weight: 600; font-size: 11.98px; line-height: 13.31px; text-align: center; margin-right: 10px;">
@@ -193,36 +193,36 @@
                         Update Startup
                     </button>
                 </div>
+                </div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 
-<script>
-    function toggleDebtAmount() {
-        const haveDebts = document.getElementById('have_debts').value;
-        const debtAmountField = document.getElementById('debt_amount');
-        debtAmountField.disabled = haveDebts !== '1';
-        if (debtAmountField.disabled) {
-            debtAmountField.value = '';
+    <script>
+        function toggleDebtAmount() {
+            const haveDebts = document.getElementById('have_debts').value;
+            const debtAmountField = document.getElementById('debt_amount');
+            debtAmountField.disabled = haveDebts !== '1';
+            if (debtAmountField.disabled) {
+                debtAmountField.value = '';
+            }
         }
-    }
 
-    function toggleExitStrategy() {
-        const hasExitStrategy = document.getElementById('has_exit_strategy').value;
-        const exitStrategyDetailsField = document.getElementById('exit_strategy_details');
-        exitStrategyDetailsField.disabled = hasExitStrategy !== '1';
-        if (exitStrategyDetailsField.disabled) {
-            exitStrategyDetailsField.value = '';
+        function toggleExitStrategy() {
+            const hasExitStrategy = document.getElementById('has_exit_strategy').value;
+            const exitStrategyDetailsField = document.getElementById('exit_strategy_details');
+            exitStrategyDetailsField.disabled = hasExitStrategy !== '1';
+            if (exitStrategyDetailsField.disabled) {
+                exitStrategyDetailsField.value = '';
+            }
         }
-    }
 
-    // Initialize the form state
-    document.addEventListener('DOMContentLoaded', function () {
-        toggleDebtAmount();
-        toggleExitStrategy();
-    });
-</script>
+        // Initialize the form state
+        document.addEventListener('DOMContentLoaded', function () {
+            toggleDebtAmount();
+            toggleExitStrategy();
+        });
+    </script>
 
 <style>
     .input-focus {

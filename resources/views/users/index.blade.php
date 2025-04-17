@@ -10,8 +10,8 @@
                                                 font-size: 21px;
                                                 font-weight: 400;">Here you can find the List of accounts.</p>
         </div>
-
-        <!-- User Table -->
+    
+    <!-- User Table -->
         <div class="table-container" style="overflow-x: auto; 
                                                     max-height: 500px; 
                                                     border-radius: 10px; 
@@ -85,7 +85,7 @@
                                     @endif
                                 </span>
                             </a>
-                        </th>
+                    </th>
                         <th style="color: #9CA3AF; 
                                                                 background-color: #F2F7FD; 
                                                                 text-align: center; 
@@ -189,31 +189,31 @@
                                     <img src="{{ asset('images/eye-view.svg') }}" alt="View"
                                         style="color: #6B7280; font-size: 15px; transition: color 0.3s;"
                                         onmouseover="this.style.color='#000000';" onmouseout="this.style.color='#6B7280';">
-                                </button>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                            </button>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
-        <!-- Pagination -->
-        <div class="d-flex justify-content-center mt-3">
-            {{ $users->links('pagination::bootstrap-4') }}
-        </div>
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center mt-3">
+        {{ $users->links('pagination::bootstrap-4') }}
+    </div>
 
         <!-- Dynamic Modal Container -->
         <div id="dynamicModalContainer"></div>
-    </div>
+</div>
 @endsection
 
 @push('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
+<script>
         // Ensure DOM is fully loaded and scripts are initialized
         $(document).ready(function () {
             // Utility function to close modal
@@ -427,23 +427,23 @@
 
             // Existing delete confirmation function
             window.confirmDelete = function (userId) {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        var form = $('<form method="POST" action="/users/' + userId + '"></form>');
-                        form.append('@csrf');
-                        form.append('@method("DELETE")');
-                        form.appendTo('body').submit();
-                    }
-                });
-            };
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var form = $('<form method="POST" action="/users/' + userId + '"></form>');
+                    form.append('@csrf');
+                    form.append('@method("DELETE")');
+                    form.appendTo('body').submit();
+                }
+            });
+        };
 
             // Show User Modal Trigger
             $(document).on('click', '.show-user', function () {
@@ -478,12 +478,12 @@
                     }
                 });
             });
-        });
-    </script>
+    });
+</script>
 @endpush
 
 <style>
-    .pagination {
+ .pagination {
         justify-content: center;
         margin-top: 0px;
     }
