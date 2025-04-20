@@ -54,6 +54,31 @@ class InvestorInsightController extends Controller
         $sector2 = array_slice($sectorKeys, $half);
         $count2 = array_slice($sectorValues, $half);
 
+
+        $estimatedBudget = 0;
+
+$estimates = [
+    '$100K to $500K' => 300000, // متوسط تقريبي
+    '$500K to $1M' => 750000,
+    '$1M to $5M' => 3000000,
+    '$5M+' => 6000000
+];
+
+foreach ($estimates as $range => $average) {
+    $count = $sortedBudgetCounts[$range] ?? 0;
+    $estimatedBudget += $count * $average;
+}
+
+// خليه بصيغة M مثلا: 2.7M
+if ($estimatedBudget >= 1000000) {
+    $estimatedBudgetText = round($estimatedBudget / 1000000, 1) . 'M';
+} elseif ($estimatedBudget >= 1000) {
+    $estimatedBudgetText = round($estimatedBudget / 1000, 1) . 'K';
+} else {
+    $estimatedBudgetText = $estimatedBudget;
+}
+$estimatedBudgetFormatted = '$' . number_format($estimatedBudget, 2, ',', '.');
+
         return view('insights_investor.index', compact(
             'investorCount',
             'investmentCounts',
@@ -63,7 +88,10 @@ class InvestorInsightController extends Controller
             'sector1',
             'count1',
             'sector2',
-            'count2'
+            'count2',
+            'estimatedBudget',
+
+            'estimatedBudgetFormatted'
         ));
     }
 }
