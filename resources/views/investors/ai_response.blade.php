@@ -37,145 +37,137 @@
         </div>
 
         <!-- Matched Startups Section -->
-        <div class="matched-startups">
-            @if($startups->count() > 0)
-                <div class="row">
-                    @foreach($startups as $startup)
-                        <div class="col-md-6 col-lg-4 mb-4 animate-slide-up" style="animation-delay: {{ $loop->iteration * 0.1 }}s">
-                            <div class="startup-card">
-                                <!-- Matching Score Circle -->
-                                <div class="d-flex align-items-center justify-content-between" style="gap: 10px;">
-    {{-- اللوجو على الشمال --}}
-    <div>
-        <img src="{{ asset('images/startup-logo-icon.svg') }}" alt="Matching Percentage Icon"
-             style="width: 52px; height: 52px;">
-    </div>
+<div class="matched-startups">
+    @if($startups->count() > 0)
+        <div class="row d-flex flex-wrap" style="gap: 20px;">  <!-- Removed flex-nowrap and overflow-auto for no scrolling -->
+            @foreach($startups as $startup)
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 animate-slide-up" style="animation-delay: {{ $loop->iteration * 0.1 }}s; min-width: 300px;">  <!-- Added min-width -->
+                    <div class="startup-card h-100">  <!-- Added h-100 to make cards equal height -->
+                        <!-- Matching Score Circle -->
+                        <div class="d-flex align-items-center justify-content-between" style="gap: 10px;">
+                            <!-- Logo on left -->
+                            <div>
+                                <img src="{{ asset('images/startup-logo-icon.svg') }}" alt="Matching Percentage Icon"
+                                     style="width: 52px; height: 52px;">
+                            </div>
 
-    {{-- المؤشر على اليمين --}}
-    <div style="text-align: center; margin-top: -8px;"> {{-- خلي المؤشر طالع فوق شوية --}}
-    @php
-        $percentage = $startup->matching_percentage;
-        $totalDashes = 13;
-        $filledDashes = round($totalDashes * $percentage / 100);
-        $dashLength = 2; // طول الشرطة
-        $innerRadius = 5; // بداية الشرطة من المركز
-        $center = 8; // خلي مركز الدايرة فوق شوية
-    @endphp
+                            <!-- Indicator on right -->
+                            <div style="text-align: center; margin-top: -8px;">
+                                @php
+                                    $percentage = $startup->matching_percentage;
+                                    $totalDashes = 13;
+                                    $filledDashes = round($totalDashes * $percentage / 100);
+                                    $dashLength = 2;
+                                    $innerRadius = 5;
+                                    $center = 8;
+                                @endphp
 
-    <svg viewBox="0 0 17 17" width="22" height="22" class="circular-dash-chart">
-        @for ($i = 0; $i < $totalDashes; $i++)
-            @php
-                $angle = ($i / $totalDashes) * 360 - 90;
-                $angleRad = deg2rad($angle);
+                                <svg viewBox="0 0 17 17" width="22" height="22" class="circular-dash-chart">
+                                    @for ($i = 0; $i < $totalDashes; $i++)
+                                        @php
+                                            $angle = ($i / $totalDashes) * 360 - 90;
+                                            $angleRad = deg2rad($angle);
 
-                $x1 = $center + $innerRadius * cos($angleRad);
-                $y1 = $center + $innerRadius * sin($angleRad);
+                                            $x1 = $center + $innerRadius * cos($angleRad);
+                                            $y1 = $center + $innerRadius * sin($angleRad);
 
-                $x2 = $center + ($innerRadius + $dashLength) * cos($angleRad);
-                $y2 = $center + ($innerRadius + $dashLength) * sin($angleRad);
-            @endphp
-            <line x1="{{ $x1 }}" y1="{{ $y1 }}" x2="{{ $x2 }}" y2="{{ $y2 }}"
-                  stroke="{{ $i < $filledDashes ? '#22c55e' : '#E5E7EB' }}"
-                  stroke-width="1.5" stroke-linecap="round" />
-        @endfor
-    </svg>
+                                            $x2 = $center + ($innerRadius + $dashLength) * cos($angleRad);
+                                            $y2 = $center + ($innerRadius + $dashLength) * sin($angleRad);
+                                        @endphp
+                                        <line x1="{{ $x1 }}" y1="{{ $y1 }}" x2="{{ $x2 }}" y2="{{ $y2 }}"
+                                              stroke="{{ $i < $filledDashes ? '#22c55e' : '#E5E7EB' }}"
+                                              stroke-width="1.5" stroke-linecap="round" />
+                                    @endfor
+                                </svg>
 
-    {{-- الرقم تحت المؤشر --}}
-    <div style="font-size: 11px; font-weight: bold; color: #374151; margin-top: 1px;">
-        {{ $percentage }}%
-    </div>
-</div>
+                                <!-- Number below indicator -->
+                                <div style="font-size: 11px; font-weight: bold; color: #374151; margin-top: 1px;">
+                                    {{ $percentage }}%
+                                </div>
+                            </div>
+                        </div>
 
-</div>
+                        <!-- Startup Header -->
+                        <div class="startup-card-header">
+                            <h3 class="company-name">{{ $startup->name }}</h3>
+                            <p class="product-service-description">{{ $startup->product_service_description }}</p>
+                            <div class="badges">
+                                <span class="badge stage-badge">{{ $startup->phase_name }}</span>
+                                <span class="badge sector-badge">{{ $startup->sector_name }}</span>
+                            </div>
+                        </div>
 
-                                <!-- Startup Header -->
-                                <div class="startup-card-header">
-                                    <h3 class="company-name">{{ $startup->name }}</h3>
-                                    <p class="product-service-description">{{ $startup->product_service_description }}</p>
-                                    <div class="badges">
-                                        <span class="badge stage-badge">{{ $startup->phase_name }}</span>
-                                        <span class="badge sector-badge">{{ $startup->sector_name }}</span>
+                        <!-- Company Info -->
+                        <div class="company-info">
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <img src="{{ asset('images/startup-building-icon.svg') }}" alt="Company Icon" style="width: 20px; height: 20px;">
+                                    <div>
+                                        <label>Company</label>
+                                        <span>{{ $startup->company }}</span>
                                     </div>
                                 </div>
-
-                                
-
-                                    <!-- Company Info -->
-                                    <div class="company-info">
-                                        <div class="info-grid">
-                                            <div class="info-item">
-                                                <img src="{{ asset('images/startup-building-icon.svg') }}" alt="Company Icon" style="width: 20px; height: 20px;">
-                                                <div>
-                                                    <label>Company</label>
-                                                    <span>{{ $startup->company }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="info-item">
-                                                <img src="{{ asset('images/startup-pin-icon.svg') }}" alt="Funding Icon" style="width: 20px; height: 20px;">
-                                                <div>
-                                                    <label>Funding</label>
-                                                    <span>{{ $startup->funding_name }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="info-item">
-                                                <img src="{{ asset('images/startup-dollar-icon.svg') }}" alt="Market Icon" style="width: 20px; height: 20px;">
-                                                <div>
-                                                    <label>Market</label>
-                                                    <span>{{ $startup->market_name }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="info-item">
+                                    <img src="{{ asset('images/startup-pin-icon.svg') }}" alt="Funding Icon" style="width: 20px; height: 20px;">
+                                    <div>
+                                        <label>Funding</label>
+                                        <span>{{ $startup->funding_name }}</span>
                                     </div>
-
-                                    <!-- Business Metrics -->
-                                    <div class="d-flex justify-content-between align-items-center" style="gap: 20px; margin-bottom: 1rem;">
-    
-    <div class="d-flex flex-column align-items-center">
-        <div class="d-flex align-items-center" style="gap: 5px;">
-            <img src="{{ asset('images/startup-arrowup-icon.svg') }}" alt="Growth Icon" style="width: 16px; height: 16px;">
-            <span class="metric-value" style="font-weight: bold;">{{ number_format($startup->revenue_growth, 1) }}%</span>
-        </div>
-        <span class="metric-label" style="font-size: 12px; color: #6B7280;">Revenue Growth</span>
-    </div>
-
-    <div class="text-center">
-        <img src="{{ asset('images/startup-incentive-icon.svg') }}" alt="Incentive Icon" style="width: 50px; height: 50px;">
-    </div>
-
-    <div class="d-flex flex-column align-items-center">
-        <div style="font-weight: bold;">
-            {{ $startup->is_profitable ? 'Yes' : 'No' }}
-        </div>
-        <span class="metric-label" style="font-size: 12px; color: #6B7280;">Profitable</span>
-    </div>
-
-</div>
-
-
-                                    <!-- Action Buttons -->
-                                    <div class="card-actions">
-                                        <button class="view-details-btn action-button"
-                                            onclick="window.location.href='{{ route('startups.show', $startup->id) }}'"
-                                            >
-                                            <img src="{{ asset('images/startup-details-icon.svg') }}" alt="Info Icon" style="width: 20px; height: 20px; margin-right: 10px;">
-                                            Details
-                                        </button>
-
+                                </div>
+                                <div class="info-item">
+                                    <img src="{{ asset('images/startup-dollar-icon.svg') }}" alt="Market Icon" style="width: 20px; height: 20px;">
+                                    <div>
+                                        <label>Market</label>
+                                        <span>{{ $startup->market_name }}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                </div>
-            @else
-                <div class="no-results animate-fade-in">
-                    <div class="no-results-content">
-                        <i class="fas fa-search fa-3x mb-3"></i>
-                        <h3>No Matching Startups Found</h3>
-                        <p>We couldn't find any startups matching your investment criteria at this time.</p>
+
+                        <!-- Business Metrics -->
+                        <div class="d-flex justify-content-between align-items-center" style="gap: 20px; margin-bottom: 1rem;">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="d-flex align-items-center" style="gap: 5px;">
+                                    <img src="{{ asset('images/startup-arrowup-icon.svg') }}" alt="Growth Icon" style="width: 16px; height: 16px;">
+                                    <span class="metric-value" style="font-weight: bold;">{{ number_format($startup->revenue_growth, 1) }}%</span>
+                                </div>
+                                <span class="metric-label" style="font-size: 12px; color: #6B7280;">Revenue Growth</span>
+                            </div>
+
+                            <div class="text-center">
+                                <img src="{{ asset('images/startup-incentive-icon.svg') }}" alt="Incentive Icon" style="width: 50px; height: 50px;">
+                            </div>
+
+                            <div class="d-flex flex-column align-items-center">
+                                <div style="font-weight: bold;">
+                                    {{ $startup->is_profitable ? 'Yes' : 'No' }}
+                                </div>
+                                <span class="metric-label" style="font-size: 12px; color: #6B7280;">Profitable</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="card-actions">
+                            <button class="view-details-btn action-button"
+                                onclick="window.location.href='{{ route('startups.show', $startup->id) }}'">
+                                <img src="{{ asset('images/startup-details-icon.svg') }}" alt="Info Icon" style="width: 20px; height: 20px; margin-right: 10px;">
+                                Details
+                            </button>
+                        </div>
                     </div>
                 </div>
-            @endif
+            @endforeach
+        </div>
+    @else
+        <div class="no-results animate-fade-in">
+            <div class="no-results-content">
+                <i class="fas fa-search fa-3x mb-3"></i>
+                <h3>No Matching Startups Found</h3>
+                <p>We couldn't find any startups matching your investment criteria at this time.</p>
+            </div>
+        </div>
+    @endif
+</div>
             <!-- Navigation -->
 <div class="text-center animate-fade-in" style="animation-delay: 0.5s; display: flex; justify-content: center; margin-top: 3rem;">
     <div style="display: flex; border: 1px solid #E5E7EB; border-radius: 10px; overflow: hidden; background-color: white; width: 550px; height: 50px;">
@@ -221,6 +213,7 @@
 
         .matched-startups {
             margin-top: 2rem;
+            flex-direction: row;
         }
 
         .startup-card {

@@ -14,7 +14,7 @@
                 <div class="card p-3 flex-fill custom-bottom-shadow">
                     <div class="d-flex align-items-center">
                         <div class="me-3" style="background-color: #F2F7FD; border-radius: 7px; height: 85px; width: 85px; display: flex; align-items: center; justify-content: center;">
-                            <img src="{{ asset('images/investor-logo.svg') }}" alt="Investor Logo" class="img-fluid" style="height: 50px; width: 50px;">
+                            <img src="{{ asset('images/insights-investors-icon.svg') }}" alt="Investor Logo" class="img-fluid" style="height: 50px; width: 50px;">
                         </div>
                         <div>
                             <h2 style="color: #374151; font-size: 35px; font-weight: 600;">{{ $investorCount }}</h2>
@@ -27,7 +27,7 @@
                 <div class="card p-3 flex-fill custom-bottom-shadow">
                     <div class="d-flex align-items-center">
                         <div class="me-3" style="background-color: #F2F7FD; border-radius: 7px; height: 85px; width: 85px; display: flex; align-items: center; justify-content: center;">
-                            <img src="{{ asset('images/startup-logo.svg') }}" alt="Startup Logo" class="img-fluid" style="height: 50px; width: 50px;">
+                            <img src="{{ asset('images/insights-startups-icon.svg') }}" alt="Startup Logo" class="img-fluid" style="height: 50px; width: 50px;">
                         </div>
                         <div>
                             <h2 style="color: #374151; font-size: 35px; font-weight: 600;">{{ $startupCount }}</h2>
@@ -40,7 +40,7 @@
                 <div class="card p-3 custom-bottom-shadow flex-fill" style="border-radius: 7px;">
                     <div class="d-flex align-items-center">
                         <div class="me-3" style="background-color: #F2F7FD; border-radius: 7px; height: 85px; width: 85px; display: flex; align-items: center; justify-content: center;">
-                            <img src="{{ asset('images/angel-logo.svg') }}" alt="Angel Logo" class="img-fluid" style="height: 50px; width: 50px;">
+                            <img src="{{ asset('images/insights-angel-icon.svg') }}" alt="Angel Logo" class="img-fluid" style="height: 50px; width: 50px;">
                         </div>
                         <div>
                             <h2 style="color: #374151; font-size: 35px; font-weight: 600;">{{ $investmentCounts['Angel Investment'] ?? 0 }}</h2>
