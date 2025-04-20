@@ -69,7 +69,6 @@ foreach ($estimates as $range => $average) {
     $estimatedBudget += $count * $average;
 }
 
-// خليه بصيغة M مثلا: 2.7M
 if ($estimatedBudget >= 1000000) {
     $estimatedBudgetText = round($estimatedBudget / 1000000, 1) . 'M';
 } elseif ($estimatedBudget >= 1000) {

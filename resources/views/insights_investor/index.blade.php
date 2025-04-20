@@ -100,7 +100,7 @@
                         style="pointer-events: none; transition: all 0.3s ease;">
                         <span
                             style="font-size: 20px; color: #374151; font-weight: 500;">{{ $estimatedBudgetFormatted }}</span>
-                        <span style="font-size: 14px;  color: #6B7280; font-weight: 400;">Estimated</span>
+                        <span style="font-size: 14px;  color: #6B7280; font-weight: 400;">Estimated Total</span>
 
                     </div>
                 </div>
