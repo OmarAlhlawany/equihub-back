@@ -13,6 +13,7 @@ use App\Http\Controllers\InvestorApiTestController;
 use App\Http\Controllers\StartupApiTestController;
 use App\Http\Controllers\ArabicPdfReportController;
 use App\Http\Controllers\EnglishPdfReportController;
+use App\Http\Controllers\WhatsAppController;
 
 
 // Redirect root to login page
@@ -48,6 +49,15 @@ Route::middleware(['auth'])->group(function () {
     // English PDF Report Routes
     Route::get('/investors/{investor}/pdf/ai-response/en', [EnglishPdfReportController::class, 'downloadAiResponse'])
         ->name('investors.pdf.ai_response.en');
+
+    // WhatsApp Report Routes
+    Route::get('/whatsapp', [WhatsAppController::class, 'index'])
+        ->name('whatsapp.index');
+    Route::post('/whatsapp/send-report', [WhatsAppController::class, 'sendReport'])
+        ->name('whatsapp.send.report');
+    Route::get('/whatsapp/test-api', [WhatsAppController::class, 'testApi'])
+        ->name('whatsapp.test.api');
+    Route::get('/whatsapp/test-document', [WhatsAppController::class, 'testDocument'])->name('whatsapp.test-document');
 
     // Startups Routes
     Route::get('/startups', [StartupController::class, 'index'])->name('startups');

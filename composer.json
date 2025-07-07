@@ -13,7 +13,8 @@
         "khaled.alshamaa/ar-php": "^7.0",
         "laravel/framework": "^12.1",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.8"
+        "laravel/tinker": "^2.8",
+        "wasenderapi/wasenderapi-laravel": "^1.0"
     },
     "require-dev": {
         "laravel/pail": "^1.1",

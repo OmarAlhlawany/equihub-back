@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'wasender' => [
+        'api_url' => env('WASENDER_API_URL', 'https://wasenderapi.com/api/send-message'),
+        'api_key' => env('WASENDER_API_KEY'),
+    ],
+
 ];
