@@ -378,7 +378,7 @@ class WhatsAppController extends Controller
 
             // For development: Use ngrok public URL
             // For production: Use your actual domain
-            $ngrokUrl = 'https://4555-156-222-228-17.ngrok-free.app';
+            $ngrokUrl = 'https://dashboard.angeleast.net';
             $documentUrl = $ngrokUrl . '/storage/' . $tempFilePath;
 
             Log::info('Document URL created', [
