@@ -45,6 +45,9 @@ class InvestorController extends Controller
         if ($request->has('sort')) {
             $direction = $request->input('direction', 'asc');
             $query->orderBy($request->input('sort'), $direction);
+        } else {
+            // Default sorting: latest investors first (by created_at desc)
+            $query->orderBy('created_at', 'desc');
         }
 
         // Paginate the results

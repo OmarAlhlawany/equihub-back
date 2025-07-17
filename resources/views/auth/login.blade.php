@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login | EquiHub</title>
+    <title>Login | Angeleast</title>
 
     <!-- AdminLTE Styles -->
     <link rel="stylesheet" href="{{ asset('adminlte/css/adminlte.min.css') }}">
@@ -201,7 +201,7 @@
     </nav>
 
     <div class="login-box">
-        <img src="{{ asset('images/logo.svg') }}" class="logo" alt="EquiHub Logo">
+        <img src="{{ asset('images/logo.svg') }}" class="logo" alt="Angeleast Logo">
         <div class="welcome-text">WELCOME</div>
         <div class="login-title">Log In to your Account</div>
 

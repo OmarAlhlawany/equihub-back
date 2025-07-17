@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تقرير مطابقات الاستثمار - EquiHub</title>
+    <title>تقرير مطابقات الاستثمار - Angeleast</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
 
@@ -232,7 +232,7 @@
     </div>
 
     <div class="footer">
-        © {{ date('Y') }} نظام التوافق الذكي من EquiHub | تم الإنشاء في {{ date('Y-m-d H:i:s') }}
+        © {{ date('Y') }} نظام التوافق الذكي من Angeleast | تم الإنشاء في {{ date('Y-m-d H:i:s') }}
     </div>
 </body>
 

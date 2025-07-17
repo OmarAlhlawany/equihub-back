@@ -5,9 +5,9 @@
         <div class="brand-container d-flex align-items-center justify-content-center"
             style="height: 70px; padding: 0.5rem; border-bottom: 1px solid rgba(0, 0, 0, 0.1);">
             <div class="d-flex align-items-center">
-                <img src="{{ asset('images/logo.svg') }}" alt="EquiHub Logo" class="brand-image"
+                <img src="{{ asset('images/logo.svg') }}" alt="Angeleast Logo" class="brand-image"
                     style="height: 40px; width: auto; opacity: 0.8;">
-                <span class="brand-text ml-2" style="display: none; color: #6B7280;">EquiHub</span>
+                <span class="brand-text ml-2" style="display: none; color: #6B7280;">Angeleast</span>
             </div>
         </div>
 

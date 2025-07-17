@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investment Matching Report - EquiHub</title>
+    <title>Investment Matching Report - Angeleast</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
 
@@ -235,7 +235,7 @@
     </div>
 
     <div class="footer">
-        © {{ date('Y') }} Smart Matching System by EquiHub | Generated on {{ date('Y-m-d H:i:s') }}
+        © {{ date('Y') }} Smart Matching System by Angeleast | Generated on {{ date('Y-m-d H:i:s') }}
     </div>
 </body>
 

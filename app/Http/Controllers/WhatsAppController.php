@@ -124,7 +124,7 @@ class WhatsAppController extends Controller
             $customMessage = $request->message;
             $defaultMessage = $request->language === 'ar'
                 ? "مرحباً {$investor->name}،\n\nنرسل لك تقرير الاستثمار المخصص من منصة إكويهب.\n\nشكراً لك."
-                : "Hello {$investor->name},\n\nWe are sending you your personalized investment report from EquiHub platform.\n\nThank you.";
+                : "Hello {$investor->name},\n\nWe are sending you your personalized investment report from Angeleast platform.\n\nThank you.";
 
             $messageText = $customMessage ?: $defaultMessage;
 
@@ -513,7 +513,7 @@ class WhatsAppController extends Controller
             // Test with a simple text message to a test number
             $testPayload = [
                 'to' => '+201020973478', // Test number
-                'text' => 'API Test from EquiHub - ' . now()->toDateTimeString()
+                'text' => 'API Test from Angeleast - ' . now()->toDateTimeString()
             ];
 
             $response = Http::timeout(30)
@@ -566,7 +566,7 @@ class WhatsAppController extends Controller
 
             $testPayload = [
                 'to' => '+201020973478',
-                'text' => 'Document Test from EquiHub - ' . now()->toDateTimeString(),
+                'text' => 'Document Test from Angeleast - ' . now()->toDateTimeString(),
                 'document' => $testPdfContent,
                 'filename' => 'test_document.pdf'
             ];
